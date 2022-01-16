@@ -454,3 +454,21 @@ input.layui-input:hover{
     background-color: var(--td-brand-color-1) !important;
     color: #fff !important;
 }
+
+div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
+    color:var(--td-brand-color-1) !important;
+}
+
+.layui-laydate-content td:hover,
+.layui-laydate-list li:hover{
+    border-radius: 3px;
+}
+
+.layui-laydate-content td:hover{
+    border-radius: 30px;
+}
+
+.layui-laydate-list > li{
+    height: 32px;
+    line-height: 32px;
+}
