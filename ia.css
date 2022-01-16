@@ -472,3 +472,56 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     height: 32px;
     line-height: 32px;
 }
+
+.ia-notification .icon{
+    width: 24px;
+    text-align: center;
+    margin-right: 8px;
+    font-size: 24px;
+    color: var(--td-error-color-6);
+}
+
+.ia-notification{
+    z-index: 1001;
+    font-size: 14px;
+    outline: 0;
+    border: 0;
+    background-color: var(--td-bg-color-container);
+    display: flex;
+    box-shadow: var(--td-shadow-2);
+    box-sizing: border-box;
+    border-radius: 3px;
+    width: 400px;
+    padding: 20px 24px 24px;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+}
+
+.ia-notification .title_contain{
+    display: flex;
+    justify-content: space-between;
+}
+
+.ia-notification .title_contain .title{
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: var(--td-text-color-primary);
+    line-height: 24px;
+}
+
+.ia-notification .content {
+    font-family: PingFangSC-Regular;
+    font-size: 14px;
+    color: var(--td-text-color-secondary);
+    line-height: 22px;
+    margin-top: 8px;
+    max-height: 66px;
+    overflow: hidden;
+    padding-right: 5px;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
