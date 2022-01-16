@@ -345,6 +345,10 @@ input.layui-input:hover{
     min-height: 32px;
 }
 
+.layui-form-label{
+    padding: 6px 15px;
+}
+
 .layui-form-pane .layui-form-label{
     height: 32px;
     line-height: 32px;
@@ -366,4 +370,87 @@ input.layui-input:hover{
 
 .layui-form-pane .layui-input{
     border-radius: 0 3px 3px 0;
+}
+.layui-form-switch{
+    line-height: 20px;
+
+}
+
+.layui-form-switch em{
+    font-size: 9px;
+    /*margin-left: 1px;*/
+}
+
+.layui-form-switch i{
+    width: 20px;
+    height: 20px;
+    left: 2px;
+    top: 1px;
+    transition: all .2s cubic-bezier(.38,0,.24,1);
+
+}
+
+.layui-form-onswitch{
+    border-color:  var(--td-brand-color-1);
+    background-color:  var(--td-brand-color-1);
+}
+
+.layui-form-onswitch i{
+    left: 100%;
+}
+
+
+.layui-anim-scaleSpring{
+    animation-name:initial;
+    -webkit-animation-name:initial;
+    transition: all .2s cubic-bezier(0,0,.15,1);
+}
+
+.layui-form-radio > i{
+    font-size: 16px;
+    transition: all .2s cubic-bezier(0,0,.15,1);
+}
+
+.layui-form-radio:hover *,
+.layui-form-radioed,
+.layui-form-radioed > i{
+    color:  var(--td-brand-color-1);
+}
+
+.layui-form-select dl{
+    padding: 18px 12px;
+    border-radius: 0 3px 3px 0;
+}
+.layui-form-select dl > dd{
+    margin-top: 4px;
+}
+
+.layui-form-select dl dd, .layui-form-select dl dt{
+    border-radius: 3px;
+}
+
+.layui-form-select dl dd.layui-this{
+    color:  #fff;
+    background-color: var(--td-brand-color-1);
+}
+
+.layui-form-pane .layui-input-block{
+    margin-left: 109px;
+}
+.layui-laydate-content td{
+    border-radius: 30px;
+}
+.layui-laydate-content td, .layui-laydate-content th{
+    width: 36px;
+    font-size: 12px;
+    height: 36px !important;
+}
+
+.layui-laydate ul> li.layui-this{
+    border-radius: 3px;
+}
+
+.layui-laydate tr> td.layui-this,.layui-laydate ul> li.layui-this{
+    background-color: var(--td-brand-color-1) !important;
+    color: #fff !important;
 }
