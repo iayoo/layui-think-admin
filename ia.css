@@ -342,4 +342,28 @@ input.layui-input:hover{
 
 .layui-input-block{
     border:none;
+    min-height: 32px;
+}
+
+.layui-form-pane .layui-form-label{
+    height: 32px;
+    line-height: 32px;
+    min-height:32px;
+    width: 108px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px 0 0 3px;
+    text-align: center;
+    background-color: #FAFAFA;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding: 0;
+    font-size: 14px;
+
+}
+
+.layui-form-pane .layui-input{
+    border-radius: 0 3px 3px 0;
 }
