@@ -214,6 +214,10 @@ ul.layui-nav a{
     color:#0C0C0C!important;
 }
 
+.layui-layout-admin .layui-header .layui-nav-bar{
+    background-color: var(--td-brand-color-1);
+}
+
 /*隐藏默认的标志hover*/
 .layui-side .layui-nav-tree .layui-nav-bar{
     display: none;
