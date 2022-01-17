@@ -9,17 +9,40 @@
                 clear: clear,
                 stack:[],
                 index:0,
-                // remove: remove,
-                // error: error,
-                // getContainer: getContainer,
-                // info: info,
-                options: {},
-                // subscribe: subscribe,
-                // success: success,
-                // version: '2.1.4',
-                // warning: warning
-
+                icon:'',
+                error: error,
+                info: info,
+                options: {
+                    title:'',
+                    message:'',
+                    time:1000,
+                },
+                success: success,
+                version: '1.0.0',
+                warning: warning
             };
+
+
+
+            function warning(message,time){
+                notice.icon = '<svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg>';
+                show(message,time);
+            }
+
+            function info(message,time){
+                notice.icon = '<svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg>';
+                show(message,time);
+            }
+
+            function error(message,time){
+                notice.icon = '<svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-check-circle-filled t-is-success"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM4.5 8.2l.7-.7L7 9.3l3.8-3.8.7.7L7 10.7 4.5 8.2z" fill-opacity="0.9"></path></svg>';
+                show(message,time);
+            }
+
+            function success(message,time){
+                notice.icon = '<svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-check-circle-filled t-is-success"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM4.5 8.2l.7-.7L7 9.3l3.8-3.8.7.7L7 10.7 4.5 8.2z" fill-opacity="0.9"></path></svg>';
+                show(message,time);
+            }
 
             function clear(index){
                 if (index !== undefined){
@@ -39,19 +62,37 @@
             }
 
             notice.toast = function (message,times){
-                // console.log(2222)
-                // console.log($("body", top.document).html())
-                notice.options.times = times??1500;
+                notice.options.time = times??1500;
                 notice.options.message = message??'';
                 show()
+
             }
 
-            function show(){
+            function show(message,time){
+
+                if (typeof message ==="string" ){
+                    notice.options.message = message;
+                }
+
+                if (time!== undefined){
+                    notice.options.time = time
+                }
+
+                if (typeof message === 'object'){
+                    let keys = Object.keys(message)
+                    keys.map(function (item) {
+                        notice.options[item] = message[item]
+                    })
+                }
+
                 notice.index+=1
                 // <div class="t-notification__icon"><svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg></div>
                 let html = "<div class='ia-notification' id='ia-notification_" + notice.index + "'>" +
-                    '<div class="icon"><svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg></div>' +
-                    '<div class="main"><div class="title_contain"><span class="title">告警通知</span><span class="message_close"></span></div><div class="content">这是一条告警的消息通知</div></div>' +
+                    '<div class="icon">'+ notice.icon +'</div>' +
+                    '<div class="main"><div class="title_contain"><span class="title">' +
+                    notice.options.title +
+                    '</span><span class="message_close"></span></div><div class="content">' +
+                    notice.options.message + '</div></div>' +
                     "</div>";
                 let elm = $(html);
                 elm.hide()
@@ -64,11 +105,15 @@
                 }
                 noticeContainElm.append(elm)
                 elm.fadeTo(500, 1, function() {
-                    console.log('完成');
+                    notice.options = {
+                        message:'',
+                        title:'',
+                        time:1500,
+                    }
                 })
                 let out = setTimeout (function () {
-                    elm.fadeOut(10500)
-                }, notice.options.times)
+                    elm.fadeOut(500)
+                }, notice.options.time)
 
         }
 

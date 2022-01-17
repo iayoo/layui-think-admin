@@ -86,6 +86,10 @@
       <button class="layui-btn show-toast">
         测试
       </button>
+
+      <button class="layui-btn show-toast-success">
+        测试 success
+      </button>
       <button class="layui-btn clear-toast">
         清除所有
       </button>
@@ -124,6 +128,13 @@ layui.use(['notice','jquery'],function(){
 
   $(".show-toast").click(function (obj) {
     notice.toast()
+  })
+  $(".show-toast-success").click(function (obj) {
+    notice.success('sssss')
+    notice.success({
+      title:'修改订单',
+      message:'修改订单操作成功'
+    })
   })
   $(".clear-toast").click(function (obj) {
     notice.clear()
