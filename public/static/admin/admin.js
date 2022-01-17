@@ -49,4 +49,6 @@ layui.use(['element','dropdown','jquery'],function (){
         let hrefId = $(elem).attr('lay-id');
         handleTagChange(hrefId,href,elem.text())
     });
+    // <i class="layui-icon layui-icon-home"></i>
+    handleTagChange(0,'home','<i class="layui-icon layui-icon-home"></i>')
 })

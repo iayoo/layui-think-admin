@@ -621,3 +621,11 @@ div.layui-layout-admin > div.layui-tab > ul.layui-tab-title > li.layui-this::aft
     transition: all .3s;
     -webkit-transition: all .3s;
 }
+
+.layui-layout-admin .layui-tab-title li:first-child{
+    padding: 0;
+    min-width:50px;
+}
+.layui-layout-admin .layui-tab-title li:first-child .layui-tab-close {
+    display: none;
+}
