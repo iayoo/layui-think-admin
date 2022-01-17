@@ -86,6 +86,9 @@
       <button class="layui-btn show-toast">
         测试
       </button>
+      <button class="layui-btn clear-toast">
+        清除所有
+      </button>
 
 
     </div>
@@ -121,7 +124,9 @@ layui.use(['notice','jquery'],function(){
 
   $(".show-toast").click(function (obj) {
     notice.toast()
-
+  })
+  $(".clear-toast").click(function (obj) {
+    notice.clear()
   })
 
 });
