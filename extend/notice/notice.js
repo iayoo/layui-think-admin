@@ -1,10 +1,6 @@
 (function (define) {
     define(['jquery'], function ($) {
-        console.log(1)
-
         return (function () {
-
-
             let notice = {
                 clear: clear,
                 stack:[],
@@ -21,8 +17,6 @@
                 version: '1.0.0',
                 warning: warning
             };
-
-
 
             function warning(message,time){
                 notice.icon = '<svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg>';
@@ -65,28 +59,22 @@
                 notice.options.time = times??1500;
                 notice.options.message = message??'';
                 show()
-
             }
 
             function show(message,time){
-
                 if (typeof message ==="string" ){
                     notice.options.message = message;
                 }
-
                 if (time!== undefined){
                     notice.options.time = time
                 }
-
                 if (typeof message === 'object'){
                     let keys = Object.keys(message)
                     keys.map(function (item) {
                         notice.options[item] = message[item]
                     })
                 }
-
                 notice.index+=1
-                // <div class="t-notification__icon"><svg fill="none" viewBox="0 0 16 16" width="1em" height="1em" class="t-icon t-icon-info-circle-filled t-is-warning"><path fill="currentColor" d="M8 15A7 7 0 108 1a7 7 0 000 14zM7.4 4h1.2v1.2H7.4V4zm.1 2.5h1V12h-1V6.5z" fill-opacity="0.9"></path></svg></div>
                 let html = "<div class='ia-notification' id='ia-notification_" + notice.index + "'>" +
                     '<div class="icon">'+ notice.icon +'</div>' +
                     '<div class="main"><div class="title_contain"><span class="title">' +
@@ -116,9 +104,7 @@
                 }, notice.options.time)
 
         }
-
             return notice;
-
         })();
 
     })
