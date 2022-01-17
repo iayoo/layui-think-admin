@@ -629,3 +629,12 @@ div.layui-layout-admin > div.layui-tab > ul.layui-tab-title > li.layui-this::aft
 .layui-layout-admin .layui-tab-title li:first-child .layui-tab-close {
     display: none;
 }
+
+.layui-nav-img{
+    width: 25px;
+    height: 25px;
+}
+
+.layui-nav-child.layui-anim.layui-anim-upbit{
+    padding: 12px 8px;
+}
