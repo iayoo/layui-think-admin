@@ -2,8 +2,10 @@
     --side-width:232px;
     --side-item-height:36px;
     --bg-color:var(--td-brand-color-1);
+    --header-bg-color:#fff;
     --td-color:#fff;
     --td-active-color:var(--td-brand-color-9);
+    --header-box-shadow:1px 1px 8px #266fe82b;
 
     --td-hover-color:#fff;
     --td-brand-color-1:#043382;
@@ -138,12 +140,22 @@
     padding: 15px;
     width: var(--side-width);
 }
+.layui-layout-admin .layui-logo{
+    top: 0;
+    height: 60px;
+}
+
+.layui-layout-admin .layui-side .layui-nav-tree{
+    top: 60px;
+}
+
+
+
 .layui-layout-admin .layui-logo,
 .layui-layout-admin .layui-side{
     width: var(--side-width);
 }
 .layui-layout-admin .layui-footer,
-.layui-layout-left,
 .layui-body
 {
     left: var(--side-width);
@@ -184,10 +196,22 @@ ul.layui-nav a{
     background-color: var(--bg-color) !important;
 }
 /*sidebar背景颜色*/
-.layui-header > .layui-logo,
+.layui-layout-admin .layui-side{
+    top:0;
+}
+
+.layui-layout-admin .layui-side .layui-logo,
 .layui-side.layui-bg-black,
 .layui-side .layui-nav{
     background-color: var(--bg-color) !important;
+}
+
+.layui-layout-left{
+    left: 0px;
+}
+
+.layui-header ul.layui-nav a{
+    color:#0C0C0C!important;
 }
 
 /*隐藏默认的标志hover*/
@@ -215,6 +239,13 @@ ul.layui-nav a{
     color:var(--td-hover-color) !important;
 }
 
+
+.layui-layout-admin .layui-header{
+    background-color: var(--header-bg-color);
+    position: fixed;
+    left: var(--side-width);
+    box-shadow: var(--header-box-shadow);
+}
 
 /* 基础元素-按钮 */
 
