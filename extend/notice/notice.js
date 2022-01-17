@@ -11,7 +11,7 @@
                 // error: error,
                 // getContainer: getContainer,
                 // info: info,
-                // options: {},
+                options: {},
                 // subscribe: subscribe,
                 // success: success,
                 // version: '2.1.4',
@@ -19,9 +19,11 @@
 
             };
 
-            notice.toast = function (){
+            notice.toast = function (message,times){
                 // console.log(2222)
                 // console.log($("body", top.document).html())
+                notice.options.times = times??1500;
+                notice.options.message = message??'';
                 show()
             }
 
@@ -32,9 +34,23 @@
                     '<div class="main"><div class="title_contain"><span class="title">告警通知</span><span class="message_close"></span></div><div class="content">这是一条告警的消息通知</div></div>' +
                     "</div>";
                 let elm = $(html);
-                $("body", top.document).append(elm)
+                elm.hide()
+                let noticeContainElm = $(".ia-notification_list", top.document);
 
-            }
+                if (noticeContainElm.length <= 0){
+                    let noticeContainElmHtml = "<div class='ia-notification_list'></div>";
+                    noticeContainElm = $(noticeContainElmHtml);
+                    $("body", top.document).append(noticeContainElm);
+                }
+                noticeContainElm.append(elm)
+                elm.fadeTo(500, 1, function() {
+                    console.log('完成');
+                })
+                // let out = setTimeout (function () {
+                //     elm.fadeOut(500)
+                // }, notice.options.times)
+
+        }
 
             return notice;
 

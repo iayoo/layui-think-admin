@@ -82,7 +82,13 @@
 
   <div class="layui-body">
     <!-- 内容主体区域 -->
-    <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div>
+    <div style="padding: 15px;">
+      <button class="layui-btn show-toast">
+        测试
+      </button>
+
+
+    </div>
   </div>
 
   <div class="layui-footer">
@@ -102,17 +108,21 @@
   layui.config({
     base: './extend/notice/'
   });
-layui.use(['notice'],function(){
+layui.use(['notice','jquery'],function(){
   var layer = layui.layer
   ,form = layui.form
+  ,$ = layui.jquery
   ,notice = layui.notice
   ,laypage = layui.laypage
   ,element = layui.element
   ,laydate = layui.laydate
   ,util = layui.util;
 
-  console.log(notice)
-  notice.toast()
+
+  $(".show-toast").click(function (obj) {
+    notice.toast()
+
+  })
 
 });
 </script>

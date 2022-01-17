@@ -480,9 +480,14 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     font-size: 24px;
     color: var(--td-error-color-6);
 }
+.ia-notification_list{
+    z-index: 1001;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+}
 
 .ia-notification{
-    z-index: 1001;
     font-size: 14px;
     outline: 0;
     border: 0;
@@ -493,9 +498,9 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     border-radius: 3px;
     width: 400px;
     padding: 20px 24px 24px;
-    position: absolute;
-    top: 15px;
-    right: 25px;
+    margin: 10px;
+
+    /*visibility: hidden;*/
 }
 
 .ia-notification .title_contain{
