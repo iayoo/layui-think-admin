@@ -6,26 +6,23 @@ layui.extend({
     let $ = layui.jquery;
     let setting = layui.setting;
 
-    let win = $('body');
-
-    let tabs = [],tabsIndex = 0;
-
-
-
     let admin = {
-        open:openPage
+        curIframeIndex:0,
+        open:openPage,
+        tabs:[],
+        indexPage:null,
+        refresh:refresh,
     };
+    admin.indexPage = $('body');
 
-    let adminEvents = {
-        /**
-         * 刷新
-         */
-        refresh:function () {
-            let curIframe = $(".layui-tab-content .layui-tab-item").eq(tabsIndex).find("iframe")[0];
-            // console.log('刷新页面:index-'+tabsIndex)
-            // console.log(curIframe)
-            curIframe.contentWindow.location.reload(true);
-        }
+    /**
+     * 刷新iframe
+     */
+    function refresh () {
+        let curIframe = $(".layui-tab-content .layui-tab-item").eq(admin.curIframeIndex).find("iframe")[0];
+        // console.log('刷新页面:index-'+tabsIndex)
+        // console.log(curIframe)
+        curIframe.contentWindow.location.reload(true);
     }
 
     function openPage(url,title,id){
@@ -41,7 +38,7 @@ layui.extend({
 
     function handleTagChange(id,href,title){
         let isHasTab = false;
-        tabs.map(function (item){
+        admin.tabs.map(function (item){
             if (id === item.id){
                 element.tabChange('window-tab', id); //切换到：用户管理
                 isHasTab = true;
@@ -55,20 +52,21 @@ layui.extend({
                     href + '" style="width:100%;height:100%;"></iframe>'
                 ,id: id //实际使用一般是规定好的id，这里以时间戳模拟下
             })
-            tabs.push({id:id,href:href,title:title})
+            admin.tabs.push({id:id,href:href,title:title})
             element.tabChange('window-tab', id); //切换到：用户管理
         }
     }
 
     element.on('tabDelete(window-tab)', function(data){
-        tabs.splice(data.index,1)
+        admin.tabs.splice(data.index,1)
     });
 
-    win.on('click', '*[layer-event]', function(){
+    // 监听事件
+    admin.indexPage.on('click', '*[layer-event]', function(){
         let _this = $(this)
             ,attrEvent = _this.attr('layer-event');
-        if (adminEvents[attrEvent]){
-            adminEvents[attrEvent].call(this, _this);
+        if (admin[attrEvent]){
+            admin[attrEvent].call(this, _this);
         }
     })
 
@@ -81,7 +79,7 @@ layui.extend({
 
     //监听tab点击
     element.on('tab(window-tab)', function(data){
-        tabsIndex = data.index
+        admin.curIframeIndex = data.index
     });
 
     //监听导航点击
