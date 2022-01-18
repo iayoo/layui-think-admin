@@ -12,4 +12,9 @@ class Base extends BaseController
     {
         return $this->fetch();
     }
+
+    public function table()
+    {
+        return $this->fetch();
+    }
 }
