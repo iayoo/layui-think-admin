@@ -18,10 +18,16 @@ layui.extend({
     /**
      * 刷新iframe
      */
-    function refresh () {
+    function refresh (obj) {
         let curIframe = $(".layui-tab-content .layui-tab-item").eq(admin.curIframeIndex).find("iframe")[0];
-        // console.log('刷新页面:index-'+tabsIndex)
-        // console.log(curIframe)
+        let _this = $(obj)
+        _this.children('i').removeClass('layui-icon-refresh-3');
+        _this.children('i').addClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
+
+        setTimeout(function () {
+                _this.children('i').removeClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
+                _this.children('i').addClass('layui-icon-refresh-3');
+            },1500);
         curIframe.contentWindow.location.reload(true);
     }
 
@@ -62,10 +68,12 @@ layui.extend({
     });
 
     // 监听事件
-    admin.indexPage.on('click', '*[layer-event]', function(){
+    admin.indexPage.on('click', '*[ia-event]', function(){
         let _this = $(this)
-            ,attrEvent = _this.attr('layer-event');
+            ,attrEvent = _this.attr('ia-event');
+        console.log(_this)
         if (admin[attrEvent]){
+
             admin[attrEvent].call(this, _this);
         }
     })
