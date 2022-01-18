@@ -230,6 +230,27 @@ ul.layui-nav a{
     color:#0C0C0C!important;
 }
 
+.layui-header ul.layui-nav.layui-layout-left li{
+    height: 40px;
+    padding: 10px 2px;
+}
+.layui-header ul.layui-nav.layui-layout-left a .layui-nav-more{
+    top:10px;
+}
+.layui-header ul.layui-nav.layui-layout-left a {
+    /*background-color: blanchedalmond;*/
+    height: 40px;
+/* line-height: 60px; */
+/* margin-top: 0px; */
+    padding: 0 15px;
+    line-height: 40px;
+}
+
+.layui-header ul.layui-nav.layui-layout-left a:hover{
+    background-color:var(--td-active-color);
+    color:#fff !important;
+}
+
 .layui-layout-admin .layui-header .layui-nav-bar{
     background-color: var(--td-brand-color-1);
 }
@@ -659,4 +680,11 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 
 .layui-nav-child.layui-anim.layui-anim-upbit{
     padding: 12px 8px;
+}
+
+.layui-layout-admin .layui-header .layui-nav .layui-nav-bar{
+    display: none;
+}
+.layui-layout-admin .layui-header .layui-nav .layui-nav-item:after{
+    display: none;
 }
