@@ -166,6 +166,7 @@
 .layui-body{
     /*padding: 18px 15px;*/
     left: var(--side-width);
+    padding-bottom: 90px;
 }
 /*
   ul.layui-nav.layui-nav-tree
@@ -192,6 +193,14 @@ ul.layui-nav a{
 .layui-nav-tree .layui-nav-item > a{
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.layui-nav-tree .layui-nav-item > a{
+    padding-left: 10px;
+}
+
+.layui-nav-tree .layui-nav-item > a > i{
+    margin-right: 10px;
 }
 
 .layui-nav-tree .layui-nav-item > a .layui-nav-more{
@@ -230,11 +239,15 @@ ul.layui-nav a{
     display: none;
 }
 
+.layui-side dl.layui-nav-child a{
+    padding-left: 33px;
+}
 .layui-side dl.layui-nav-child .layui-this a,
 .layui-nav-tree .layui-nav-item.layui-this > a
 {
     background-color: var(--td-brand-color);
     color: #fff !important;
+
 }
 
 .layui-side .layui-nav-tree .layui-nav-child dd,
@@ -582,6 +595,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 }
 .layui-layout-admin .layui-body > .layui-tab > .layui-tab-title{
     border: 1px solid #eee;
+    box-shadow: var(--header-box-shadow);
 }
 
 .layui-layout-admin .layui-body > .layui-tab{
