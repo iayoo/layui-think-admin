@@ -1,19 +1,25 @@
-window.rootPath = (function(src) {
-    src = document.scripts[document.scripts.length - 1].src;
-    return src.substring(0, src.lastIndexOf("/") + 1);
-})();
-
-layui.config({
-    base: rootPath + "component/",
-});
-
-layui.use(['element','dropdown','jquery'],function (){
+layui.extend({
+    setting: 'config' //配置模块
+    ,
+    admin: 'lib/admin' //核心模块
+    ,
+    view: 'lib/view' //视图渲染模块
+}).define(['setting','element','dropdown','jquery'], function(exports) {
+    console.log(22221111)
     let element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
     // let dropdown = layui.dropdown;
     let $ = layui.jquery;
+    let setting = layui.setting;
 
     let tabs = [];
 
+    let admin = {
+        open:openPage
+    };
+
+    function openPage(url,title,id){
+        handleTagChange(id,url,title)
+    }
 
     // //菜单点击事件，其中 docDemoMenu1 对应的是菜单结构上的 id 指
     // dropdown.on('click(docSideMenu)', function(options){
@@ -54,5 +60,5 @@ layui.use(['element','dropdown','jquery'],function (){
         handleTagChange(hrefId,href,elem.text())
     });
     // <i class="layui-icon layui-icon-home"></i>
-    handleTagChange(0,'home','<i class="layui-icon layui-icon-home"></i>')
-})
+    exports('admin',admin);
+});

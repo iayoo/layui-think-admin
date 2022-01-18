@@ -155,10 +155,18 @@
 .layui-layout-admin .layui-side{
     width: var(--side-width);
 }
-.layui-layout-admin .layui-footer,
-.layui-body
+
+
+
+.layui-layout-admin .layui-footer
 {
     left: var(--side-width);
+}
+
+.layui-body{
+    /*padding: 18px 15px;*/
+    left: var(--side-width);
+    padding-bottom: 90px;
 }
 /*
   ul.layui-nav.layui-nav-tree
@@ -185,6 +193,14 @@ ul.layui-nav a{
 .layui-nav-tree .layui-nav-item > a{
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.layui-nav-tree .layui-nav-item > a{
+    padding-left: 10px;
+}
+
+.layui-nav-tree .layui-nav-item > a > i{
+    margin-right: 10px;
 }
 
 .layui-nav-tree .layui-nav-item > a .layui-nav-more{
@@ -223,11 +239,15 @@ ul.layui-nav a{
     display: none;
 }
 
+.layui-side dl.layui-nav-child a{
+    padding-left: 33px;
+}
 .layui-side dl.layui-nav-child .layui-this a,
 .layui-nav-tree .layui-nav-item.layui-this > a
 {
     background-color: var(--td-brand-color);
     color: #fff !important;
+
 }
 
 .layui-side .layui-nav-tree .layui-nav-child dd,
@@ -567,27 +587,29 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     -webkit-box-orient: vertical;
 }
 
-div.layui-layout-admin > div.layui-tab > ul.layui-tab-title > li.layui-this::after,.layui-layout-admin > .layui-tab > ul.layui-tab-title > li{
+div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.layui-this::after,.layui-layout-admin > .layui-tab > ul.layui-tab-title > li{
     border:none;
     border-bottom:none !important;
     /*border-left: 1px solid #eee;*/
     border-right: 1px solid #eee;
 }
-.layui-layout-admin > .layui-tab > .layui-tab-title{
+.layui-layout-admin .layui-body > .layui-tab > .layui-tab-title{
     border: 1px solid #eee;
+    box-shadow: var(--header-box-shadow);
 }
 
-.layui-layout-admin > .layui-tab{
+.layui-layout-admin .layui-body > .layui-tab{
     margin-top: 0;
-    left: var(--side-width);
-    top: 60px;
-    position: fixed;
+    /*left: var(--side-width);*/
+    /*top: 60px;*/
+    /*position: absolute;*/
     background-color: #fff;
     width: 100%;
     height: 100%;
 }
 
-.layui-layout-admin > .layui-tab > .layui-tab-content,.layui-layout-admin > .layui-tab > .layui-tab-content > .layui-tab-item{
+.layui-layout-admin .layui-body > .layui-tab > .layui-tab-content,
+.layui-layout-admin .layui-body> .layui-tab > .layui-tab-content > .layui-tab-item{
     padding: 0;
     height: 100%;
     width: 100%;
