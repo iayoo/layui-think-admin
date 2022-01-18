@@ -114,7 +114,7 @@
     layui.config({
         base: '/static/admin/' //静态资源所在路径
     }).extend({
-        index: 'static/admin' //主入口模块
+        index: '/static/admin' //主入口模块
     }).use(['admin'],function(){
         let admin = layui.admin;
         admin.open('{:url("home")}','<i class="layui-icon layui-icon-home"></i>',0)

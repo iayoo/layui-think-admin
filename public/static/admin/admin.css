@@ -594,7 +594,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     border-right: 1px solid #eee;
 }
 .layui-layout-admin .layui-body > .layui-tab > .layui-tab-title{
-    border: 1px solid #eee;
+    /*border: 1px solid #eee;*/
     box-shadow: var(--header-box-shadow);
 }
 
@@ -659,4 +659,26 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 
 .layui-nav-child.layui-anim.layui-anim-upbit{
     padding: 12px 8px;
+}
+
+.ia-loading{
+    height: 100%;
+    width: 100%;
+    top: 60px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+.ia-loading >div>i{
+    color: var(--td-brand-color-1);
+}
+.ia-loading >div{
+
+    width: 80px;
+    height: 80px;
+    display: inline;
+    font-size: 80px;
+    text-align: center;
 }
