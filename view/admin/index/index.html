@@ -106,34 +106,16 @@
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="static/admin/layui/layui.js"></script>
-<script src="static/admin/admin.js?v={:time()}"></script>
 <script>
-
-    layui.use(['notice','jquery'],function(){
+    layui.config({
+        base: '/static/admin/' //静态资源所在路径
+    }).extend({
+        index: 'static/admin' //主入口模块
+    }).use('admin',function(){
         var layer = layui.layer
             ,form = layui.form
             ,$ = layui.jquery
-            ,notice = layui.notice
-            ,laypage = layui.laypage
-            ,element = layui.element
-            ,laydate = layui.laydate
-            ,util = layui.util;
-
-
-        $(".show-toast").click(function (obj) {
-            notice.toast()
-        })
-        $(".show-toast-success").click(function (obj) {
-            notice.success('sssss')
-            notice.success({
-                title:'修改订单',
-                message:'修改订单操作成功'
-            })
-        })
-        $(".clear-toast").click(function (obj) {
-            notice.clear()
-        })
-
+            ,notice = layui.notice;
     });
 </script>
 </body>

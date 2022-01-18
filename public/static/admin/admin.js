@@ -3,11 +3,14 @@ window.rootPath = (function(src) {
     return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
-layui.config({
-    base: rootPath + "component/",
-});
+layui.extend({
+    setter: 'config' //配置模块
+    ,
+    admin: 'lib/admin' //核心模块
+    ,
+    view: 'lib/view' //视图渲染模块
+}).define(['setter','element','dropdown','jquery'], function(exports) {
 
-layui.use(['element','dropdown','jquery'],function (){
     let element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
     // let dropdown = layui.dropdown;
     let $ = layui.jquery;
@@ -55,4 +58,5 @@ layui.use(['element','dropdown','jquery'],function (){
     });
     // <i class="layui-icon layui-icon-home"></i>
     handleTagChange(0,'home','<i class="layui-icon layui-icon-home"></i>')
-})
+
+});
