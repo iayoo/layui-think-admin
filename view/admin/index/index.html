@@ -57,12 +57,16 @@
         </ul>
     </div>
 
-    <div class="layui-tab" lay-filter="window-tab" lay-allowclose="true" >
-        <ul class="layui-tab-title">
-        </ul>
-        <div class="layui-tab-content">
+    <div class="layui-body">
+        <div class="layui-tab" lay-filter="window-tab" lay-allowclose="true" >
+            <ul class="layui-tab-title">
+            </ul>
+            <div class="layui-tab-content">
+            </div>
         </div>
     </div>
+
+
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
@@ -70,7 +74,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="side_menu" id="docSideMenu">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">基础元素</a>
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-home"></i>基础元素</a>
                     <dl class="layui-nav-child">
                         <dd><a data-href="{:url('base/button')}" lay-id="11">按钮</a></dd>
                         <dd><a data-href="{:url('base/form')}" lay-id="12">表单</a></dd>
@@ -111,11 +115,10 @@
         base: '/static/admin/' //静态资源所在路径
     }).extend({
         index: 'static/admin' //主入口模块
-    }).use('admin',function(){
-        var layer = layui.layer
-            ,form = layui.form
-            ,$ = layui.jquery
-            ,notice = layui.notice;
+    }).use(['admin'],function(){
+        let admin = layui.admin;
+        admin.open('{:url("home")}','<i class="layui-icon layui-icon-home"></i>',0)
+
     });
 </script>
 </body>
