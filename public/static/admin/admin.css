@@ -596,6 +596,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 .layui-layout-admin .layui-body > .layui-tab > .layui-tab-title{
     /*border: 1px solid #eee;*/
     box-shadow: var(--header-box-shadow);
+    z-index: 1;
 }
 
 .layui-layout-admin .layui-body > .layui-tab{
@@ -664,7 +665,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 .ia-loading{
     height: 100%;
     width: 100%;
-    top: 60px;
+    top: 0;
     background-color: #fff;
     display: flex;
     justify-content: center;
