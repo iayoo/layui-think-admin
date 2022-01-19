@@ -776,3 +776,7 @@ div.layui-layer-btn a.layui-layer-btn0{
     background-color: var(--td-brand-color-9);
     border-color: var(--td-brand-color-9);
 }
+
+div.layui-layer{
+    border-radius: 10px;
+}
