@@ -112,7 +112,7 @@ layui.extend({
     //监听导航点击
     element.on('nav(side_menu)', function(elem){
         let href = $(elem).data('href');
-        let hrefId = $(elem).attr('lay-id');
+        let hrefId = $(elem).attr('menu-id');
         let openType = $(elem).attr('ia-open-type');
         handleTagChange(hrefId,href,elem.text())
     });
@@ -120,6 +120,17 @@ layui.extend({
     //监听tab点击
     element.on('tab(window-tab)', function(data){
         admin.curIframeIndex = data.index
+        let lay_id=$(this).attr("lay-id");
+        let nav_tree=$(".layui-nav-tree");
+        //移除其他选中
+        nav_tree.find("a[menu-id]").parent().removeClass("layui-this");
+        //选中点击的
+        let kv="a[menu-id='"+lay_id+"']";
+        let p = nav_tree.find(kv).parents('.layui-nav-item');
+        if (!p.hasClass('layui-nav-itemed')){
+            p.addClass('layui-nav-itemed')
+        }
+        nav_tree.find(kv).parent().addClass("layui-this")
     });
 
     //监听导航点击
