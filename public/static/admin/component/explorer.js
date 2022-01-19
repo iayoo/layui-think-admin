@@ -93,6 +93,11 @@ layui.extend({
                 }
                 layer.confirm('确认删除'+ selectedList.length +'个文件？', {
                     title:'确认删除？',
+                    success:function (layero) {
+                        console.log('success')
+                        layer.setTop(layero); //重点2
+                    },
+                    zIndex: layer.zIndex,
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
                     layer.close(index)
