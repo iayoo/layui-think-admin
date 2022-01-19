@@ -122,6 +122,7 @@ layui.extend({
             ,area: ['830px', '80%']
             ,shade: 0
             ,maxmin: true
+            ,id:'explorer'
             // ,offset: [ //为了演示，随机坐标
             //     Math.random()*($(window).height()-300)
             //     ,Math.random()*($(window).width()-390)
