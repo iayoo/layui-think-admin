@@ -17,4 +17,9 @@ class Base extends BaseController
     {
         return $this->fetch();
     }
+
+    public function toast()
+    {
+        return $this->fetch();
+    }
 }

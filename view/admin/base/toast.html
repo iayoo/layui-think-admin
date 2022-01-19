@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>layui-tdesign Admin</title>
+  <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+  <link rel="stylesheet" href="/static/admin/admin.css">
+</head>
+<body>
+<div style="padding: 18px 15px">
+  <button class="layui-btn " id="toast_success">成功</button>
+  <button class="layui-btn " id="toast_warning">异常</button>
+  <button class="layui-btn " id="toast_error">错误</button>
+  <button class="layui-btn " id="toast_info">通用</button>
+  <button class="layui-btn layui-btn-primary" id="toast_left_top">左上角</button>
+  <br>
+  <br>
+  <br>
+  <button class="layui-btn " id="toast_clear">清除所有</button>
+
+</div>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="/static/admin/layui/layui.js"></script>
+<script src="/static/admin/config.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+  layui.use([ 'table','toast','jquery'], function(){
+    let table = layui.table;
+    let toast = layui.toast;
+    let $ = layui.jquery;
+    $('#toast_success').on('click',function (obj){
+        toast.success("这是一个成功推送","标题",15000);
+    })
+    $('#toast_warning').on('click',function (obj){
+        toast.warning("这是一个异常推送");
+    })
+    $('#toast_error').on('click',function (obj){
+        toast.error("这是一个错误推送");
+    })
+    $('#toast_info').on('click',function (obj){
+        toast.info("这是一个通用推送");
+    })
+    $('#toast_clear').on('click',function (obj){
+        toast.clear();
+    })
+    $('#toast_left_top').on('click',function (obj){
+        toast.info()
+    })
+  });
+</script>
+</body>
+</html>
