@@ -765,3 +765,14 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 .layui-form-pane .layui-form-radio, .layui-form-pane .layui-form-switch{
     margin-top: 4px;
 }
+
+/* 弹出层样式优化 */
+
+div.layui-layer-btn a{
+    border-radius: 5px;
+}
+
+div.layui-layer-btn a.layui-layer-btn0{
+    background-color: var(--td-brand-color-9);
+    border-color: var(--td-brand-color-9);
+}

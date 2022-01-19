@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>layui-tdesign Admin</title>
+    <link rel="stylesheet" href="/static/admin/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/admin.css">
+</head>
+<body>
+<div style="padding: 18px 15px">
+    <button class="layui-btn " id="base">通用</button>
+
+    <button class="layui-btn " id="layer_close">多个按钮</button>
+    <button class="layui-btn " id="toast_warning">异常</button>
+    <button class="layui-btn " id="toast_error">错误</button>
+    <button class="layui-btn layui-btn-primary" id="toast_left_top">左上角</button>
+    <br>
+    <br>
+    <br>
+    <button class="layui-btn " id="toast_clear">清除所有</button>
+
+</div>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="/static/admin/layui/layui.js"></script>
+<script src="/static/admin/config.js"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script>
+    layui.use([ 'table','jquery'], function(){
+        let table = layui.table;
+        let $ = layui.jquery;
+        $('#base').on('click',function (obj){
+            layer.open({
+                title: '在线调试'
+                ,content: '配置各种参数，试试效果'
+            });
+        })
+        $('#layer_close').on('click',function (obj){
+            //多窗口模式，层叠置顶
+            layer.open({
+                type: 1 //此处以iframe举例
+                ,title: '当你选择该窗体时，即会在最顶端'
+                ,area: ['390px', '260px']
+                ,shade: 0
+                ,maxmin: true
+                ,offset: [ //为了演示，随机坐标
+                    Math.random()*($(window).height()-300)
+                    ,Math.random()*($(window).width()-390)
+                ]
+                ,content: '<div style="padding: 15px;">内容标记：'+ new Date().getTime() + '，按 ESC 键可关闭。<br><br>当你的页面有很多很多 layer 窗口，你需要像 Window 窗体那样，点击某个窗口，该窗体就置顶在上面，那么 layer.setTop() 可以来轻松实现。它采用巧妙的逻辑，以使这种置顶的性能达到最优。</div>'
+
+                ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+                ,yes: function(){
+                    $(that).click();
+                }
+                ,btn2: function(){
+                    layer.closeAll();
+                }
+
+                ,zIndex: layer.zIndex //重点1
+                ,success: function(layero, index){
+                    layer.setTop(layero); //重点2. 保持选中窗口置顶
+
+                    //记录索引，以便按 esc 键关闭。事件见代码最末尾处。
+                    layer.escIndex = layer.escIndex || [];
+                    layer.escIndex.unshift(index);
+                    //选中当前层时，将当前层索引放置在首位
+                    layero.on('mousedown', function(){
+                        var _index = layer.escIndex.indexOf(index);
+                        if(_index !== -1){
+                            layer.escIndex.splice(_index, 1); //删除原有索引
+                        }
+                        layer.escIndex.unshift(index); //将索引插入到数组首位
+                    });
+                }
+                ,end: function(){
+                    //更新索引
+                    if(typeof layer.escIndex === 'object'){
+                        layer.escIndex.splice(0, 1);
+                    }
+                }
+            });
+        })
+        $('#toast_error').on('click',function (obj){
+            toast.error("这是一个错误推送");
+        })
+        $('#toast_info').on('click',function (obj){
+            toast.info("这是一个通用推送");
+        })
+        $('#toast_clear').on('click',function (obj){
+            toast.clear();
+        })
+        $('#toast_left_top').on('click',function (obj){
+            toast.info()
+        })
+    });
+</script>
+</body>
+</html>

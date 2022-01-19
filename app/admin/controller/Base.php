@@ -22,4 +22,9 @@ class Base extends BaseController
     {
         return $this->fetch();
     }
+
+    public function layer()
+    {
+        return $this->fetch();
+    }
 }
