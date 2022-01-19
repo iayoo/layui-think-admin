@@ -7,7 +7,8 @@ layui.extend({
     let form = layui.form;
     let laypage = layui.laypage;
     let explorer = {
-        open:open
+        open:open,
+        _this:null
     }
     let searchContain = '<div class="search">' +
         '<form class="layui-form" action="">' +
@@ -95,6 +96,10 @@ layui.extend({
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
                     layer.close(index)
+                    explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
+                    setTimeout(function () {
+                        explorer._this.children('.explorer_loading').remove()
+                    },1500)
                 });
             }
         })
@@ -132,8 +137,10 @@ layui.extend({
             }
 
             ,zIndex: layer.zIndex //重点1
-            ,success: function(layero, index){
+            ,success: function(layerObj, index){
                 form.render()
+                console.log(layerObj)
+                explorer._this = $(layerObj)
                 renderData(getList())
             }
             ,end: function(){
