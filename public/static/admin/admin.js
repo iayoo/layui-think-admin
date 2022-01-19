@@ -11,6 +11,7 @@ layui.extend({
         tabs:[],
         indexPage:null,
         refresh:refresh,
+        iframeLoading:iframeLoading
     };
     admin.indexPage = $('body');
 
@@ -23,10 +24,11 @@ layui.extend({
         _this.children('i').removeClass('layui-icon-refresh-3');
         _this.children('i').addClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
 
+        admin.iframeLoading();
         setTimeout(function () {
                 _this.children('i').removeClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
                 _this.children('i').addClass('layui-icon-refresh-3');
-            },1500);
+            },1000);
         curIframe.contentWindow.location.reload(true);
     }
 
@@ -62,7 +64,7 @@ layui.extend({
             }
         })
         if (href !== undefined && !isHasTab){
-            iframeLoading()
+            admin.iframeLoading();
             //新增一个Tab项
             element.tabAdd('window-tab', {
                 title: title//用于演示
