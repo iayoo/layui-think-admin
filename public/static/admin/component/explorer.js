@@ -130,7 +130,7 @@ layui.extend({
             ,content: contentHtml
 
             ,btn: ['确定', '取消'] //只是为了演示
-            ,yes: function(){
+            ,yes: function(index){
                 if (explorer.selected !== undefined){
                     let selectedList = $('.explorer_file_list .selected');
                     let data = [];
@@ -141,7 +141,9 @@ layui.extend({
                             'href':o_this.data('href'),
                         })
                     }
-                    explorer.selected(data)
+                    if (explorer.selected(data)){
+                        layer.close(index)
+                    }
                 }
             }
             ,btn2: function(){
