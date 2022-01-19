@@ -1,10 +1,11 @@
 layui.extend({
 
-}).define(['element','jquery','layer','form'], function(exports) {
+}).define(['element','jquery','layer','form','laypage'], function(exports) {
     let layer = layui.layer;
     let $ = layui.jquery;
     let element = layui.element;
     let form = layui.form;
+    let laypage = layui.laypage;
     let explorer = {
         open:open
     }
@@ -32,48 +33,88 @@ layui.extend({
         '  </div>'+
         '  <div class="layui-form-item">' +
         '    <div class="layui-input-block">' +
-        '      <a class="layui-btn">搜索<a><a class="layui-btn">上传文件<a>' +
+        '      <a class="layui-btn" style="margin-right: 8px">搜索<a><a class="layui-btn" style="margin-right: 8px">上传文件<a><a explorer-event="del" class="layui-btn layui-btn-danger">删除文件<a>' +
         '    </div>' +
         '  </div>' +
         '</form>' +
         '</div>';
-    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div>";
+    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>";
 
     function getList(){
         return [
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'https://image.shutterstock.com/z/stock-photo-doctor-in-ppe-suit-and-face-mask-demonstrates-test-tubes-with-coronavirus-covid-samples-1933377338.jpg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
         ];
     }
 
     function renderData(data){
         let explorerListDom = $('.explorer_file_list');
-        console.log('render data');
-        console.log(explorerListDom);
         data.map(function (item){
             explorerListDom.append(
-                '<div class="file_item"><div class="file_del_btn" data-file-id="'+
-                item.id +'"></div><div class="image-show"><img src="'+ item.path +
+                '<div class="file_item" explorer-event="select" data-file-id="'+
+                item.id +'"><div class="file_del_btn" data-file-id="'+
+                item.id +'"></div><div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div><div class="image-show"><img src="'+ item.path +
                 '" alt="' + item.title + '"></div><div class="title"><p>' +
-                item.title + '</p></div></div>'
+                item.title + '</p></div></div></div>'
             );
         })
+        // 监听事件
+        explorerListDom.on('click', '*[explorer-event]', function(){
+            let _this = $(this)
+                ,attrEvent = _this.attr('explorer-event'),
+                id = _this.data('file-id');
+            if (_this.hasClass('selected')){
+                _this.removeClass('selected')
+            }else{
+                _this.addClass('selected')
+            }
+        })
+
+        $(".explorer_contain > .search").on('click','*[explorer-event]',function(){
+            let _this = $(this)
+                ,attrEvent = _this.attr('explorer-event'),
+                id = _this.data('file-id');
+            console.log(attrEvent)
+            if (attrEvent === 'del'){
+                //询问框
+                let selectedList = $('.explorer_file_list .selected');
+                if (selectedList.length <= 0){
+                    return;
+                }
+                layer.confirm('确认删除'+ selectedList.length +'个文件？', {
+                    title:'确认删除？',
+                    btn: ['确认','取消'] //按钮
+                }, function(index,layerObj){
+                    layer.close(index)
+                });
+            }
+        })
+
+        //自定义样式
+        laypage.render({
+            elem: 'explorer_page'
+            ,count: 100
+            ,theme: '#1E9FFF'
+        });
     }
 
 
     function open(){
-        console.log('explorer open!')
 
         //多窗口模式，层叠置顶
         layer.open({
             type: 1 //此处以iframe举例
             ,title: '资源管理器'
-            ,area: ['80%', '80%']
+            ,area: ['830px', '80%']
             ,shade: 0
             ,maxmin: true
             // ,offset: [ //为了演示，随机坐标
@@ -82,7 +123,7 @@ layui.extend({
             // ]
             ,content: contentHtml
 
-            ,btn: ['继续弹出', '全部关闭'] //只是为了演示
+            ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(){
                 $(that).click();
             }

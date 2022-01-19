@@ -788,11 +788,77 @@ div.layui-layer{
 
 .explorer_file_list{
     display: flex;
+    flex-wrap: wrap;
+    margin: 0 25px;
 }
 .explorer_file_list .file_item .image-show,.explorer_file_list .file_item .image-show img{
-    width:100%;
+    width: 97%;
+    display: flex;
+    justify-content: center;
+}
+
+.explorer_file_list .file_item .image-show img{
+
+}
+.explorer_file_list .file_item:after{
+    content: "";
+    width: 141px;
+    height: 141px;
+    position: absolute;
+    top: 0;
+    border: 2px solid #f2f2f2;
+    border-radius: 5px;
 }
 .explorer_file_list .file_item{
-    width: 150px;
-    height: 150px;
+    width: 145px;
+    height: 145px;
+    margin: 5px 5px;
+    position: relative;
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.explorer_file_list .file_item.selected:after{
+
+    border: 2px solid var(--bg-color);
+}
+.explorer_file_list .file_item .file_selected_icon{
+    display: none;
+}
+.explorer_file_list .file_item.selected .file_selected_icon{
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    /*width: ;*/
+    background-color: var(--bg-color);
+    color: #F2F2F2;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.explorer_file_list .file_item .title{
+    position: absolute;
+    text-align: center;
+    width: 141px;
+    bottom: -26px;
+    height: 26px;
+    left: 2px;
+    background-color: var(--bg-color);
+    color: #F2F2F2;
+    line-height: 26px;
+    font-size: 12px;
+}
+
+#explorer_page{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
