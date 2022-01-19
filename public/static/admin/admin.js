@@ -1,10 +1,9 @@
 layui.extend({
-    setting: 'config'
-}).define(['setting','element','dropdown','jquery'], function(exports) {
+
+}).define(['element','dropdown','jquery'], function(exports) {
     let element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
     // let dropdown = layui.dropdown;
     let $ = layui.jquery;
-    let setting = layui.setting;
 
     let admin = {
         curIframeIndex:0,
@@ -42,6 +41,18 @@ layui.extend({
     //     // console.log(options); //菜单列表的 lay-options 中的参数
     // });
 
+    function iframeLoading(){
+        let loafingHtml = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
+        let loading = $(loafingHtml);
+        $(".layui-layout-admin .layui-body .layui-tab-content").append(loading)
+        $(".layui-layout-admin .layui-body .layui-tab-content").attr('height',0)
+        setTimeout(function () {
+            $(".layui-layout-admin .layui-body .layui-tab-content").removeAttr('height')
+
+            $(".layui-layout-admin .layui-body .layui-tab-content .ia-loading").remove()
+        },1000)
+    }
+
     function handleTagChange(id,href,title){
         let isHasTab = false;
         admin.tabs.map(function (item){
@@ -51,6 +62,7 @@ layui.extend({
             }
         })
         if (href !== undefined && !isHasTab){
+            iframeLoading()
             //新增一个Tab项
             element.tabAdd('window-tab', {
                 title: title//用于演示
@@ -60,6 +72,7 @@ layui.extend({
             })
             admin.tabs.push({id:id,href:href,title:title})
             element.tabChange('window-tab', id); //切换到：用户管理
+
         }
     }
 
