@@ -8,7 +8,8 @@ layui.extend({
     let laypage = layui.laypage;
     let explorer = {
         open:open,
-        _this:null
+        _this:null,
+        selected:undefined
     }
     let searchContain = '<div class="search">' +
         '<form class="layui-form" action="">' +
@@ -61,7 +62,7 @@ layui.extend({
         let explorerListDom = $('.explorer_file_list');
         data.map(function (item){
             explorerListDom.append(
-                '<div class="file_item" explorer-event="select" data-file-id="'+
+                '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+
                 item.id +'"><div class="file_del_btn" data-file-id="'+
                 item.id +'"></div><div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div><div class="image-show"><img src="'+ item.path +
                 '" alt="' + item.title + '"></div><div class="title"><p>' +
@@ -84,7 +85,6 @@ layui.extend({
             let _this = $(this)
                 ,attrEvent = _this.attr('explorer-event'),
                 id = _this.data('file-id');
-            console.log(attrEvent)
             if (attrEvent === 'del'){
                 //询问框
                 let selectedList = $('.explorer_file_list .selected');
@@ -127,15 +127,22 @@ layui.extend({
             ,shade: 0
             ,maxmin: true
             ,id:'explorer'
-            // ,offset: [ //为了演示，随机坐标
-            //     Math.random()*($(window).height()-300)
-            //     ,Math.random()*($(window).width()-390)
-            // ]
             ,content: contentHtml
 
             ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(){
-                $(that).click();
+                if (explorer.selected !== undefined){
+                    let selectedList = $('.explorer_file_list .selected');
+                    let data = [];
+                    for (let i = 0; i < selectedList.length; i++) {
+                        let o_this = $(selectedList[i])
+                        data.push({
+                            'id':o_this.data('file-id'),
+                            'href':o_this.data('href'),
+                        })
+                    }
+                    explorer.selected(data)
+                }
             }
             ,btn2: function(){
                 layer.closeAll();
@@ -144,7 +151,6 @@ layui.extend({
             ,zIndex: layer.zIndex //重点1
             ,success: function(layerObj, index){
                 form.render()
-                console.log(layerObj)
                 explorer._this = $(layerObj)
                 renderData(getList())
             }

@@ -25,6 +25,9 @@
 
         $("#open_file_manager").on("click",function (obj) {
             explorer.open();
+            explorer.selected = function (data) {
+                console.log(data)
+            }
         })
     });
 </script>
