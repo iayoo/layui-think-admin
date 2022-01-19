@@ -35,7 +35,6 @@ layui.extend({
     }
 
     function popup(obj){
-        console.log(obj)
         let url = $(obj).data('href');
         let title = $(obj).text()
         if (url !== ''){
