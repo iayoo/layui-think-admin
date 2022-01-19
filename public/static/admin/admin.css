@@ -752,6 +752,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 }
 .layui-table-page span.layui-laypage-skip input.layui-input{
     min-height: 10px;
+    padding-left: 0;
 }
 .layui-table-page .layui-laypage a{
     background-color: var(--table-page-btn-default);
