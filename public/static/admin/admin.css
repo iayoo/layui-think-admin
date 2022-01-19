@@ -553,20 +553,13 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     line-height: 32px;
 }
 
-.ia-notification .icon{
-    width: 24px;
-    text-align: center;
-    margin-right: 8px;
-    font-size: 24px;
-    color: var(--td-error-color-6);
-}
+/* toast 消息弹窗 */
 .ia-notification_list{
     z-index: 1001;
     position: absolute;
     top: 15px;
     right: 25px;
 }
-
 .ia-notification{
     font-size: 14px;
     outline: 0;
@@ -575,12 +568,17 @@ div.layui-laydate-header i:hover, .layui-laydate-header span:hover{
     display: flex;
     box-shadow: var(--td-shadow-2);
     box-sizing: border-box;
-    border-radius: 3px;
+    border-radius: 8px;
     width: 360px;
     padding: 15px 12px;
     margin: 10px;
-
-    /*visibility: hidden;*/
+}
+.ia-notification .icon{
+    width: 24px;
+    text-align: center;
+    margin-right: 8px;
+    font-size: 24px;
+    color: var(--td-error-color-6);
 }
 
 .layui-form-checked[lay-skin="primary"] i{
