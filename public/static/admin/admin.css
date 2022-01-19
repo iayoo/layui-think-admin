@@ -760,3 +760,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     border-radius: 3px;
     color: #00FFFF;
 }
+
+.layui-form-pane .layui-form-radio, .layui-form-pane .layui-form-switch{
+    margin-top: 4px;
+}
