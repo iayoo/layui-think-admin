@@ -778,3 +778,21 @@ div.layui-layer-btn a.layui-layer-btn0{
 div.layui-layer{
     border-radius: 10px;
 }
+
+
+/* 资源管理器 */
+
+.explorer_contain{
+    padding: 12px 18px;
+}
+
+.explorer_file_list{
+    display: flex;
+}
+.explorer_file_list .file_item .image-show,.explorer_file_list .file_item .image-show img{
+    width:100%;
+}
+.explorer_file_list .file_item{
+    width: 150px;
+    height: 150px;
+}
