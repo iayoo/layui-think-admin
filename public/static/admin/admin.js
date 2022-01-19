@@ -1,9 +1,10 @@
 layui.extend({
 
-}).define(['element','dropdown','jquery'], function(exports) {
+}).define(['element','dropdown','jquery','layer'], function(exports) {
     let element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
     // let dropdown = layui.dropdown;
     let $ = layui.jquery;
+    let layer = layui.layer;
 
     let admin = {
         curIframeIndex:0,
@@ -11,6 +12,7 @@ layui.extend({
         tabs:[],
         indexPage:null,
         refresh:refresh,
+        popup:popup,
         iframeLoading:iframeLoading
     };
     admin.indexPage = $('body');
@@ -30,6 +32,23 @@ layui.extend({
                 _this.children('i').addClass('layui-icon-refresh-3');
             },1000);
         curIframe.contentWindow.location.reload(true);
+    }
+
+    function popup(obj){
+        console.log(obj)
+        let url = $(obj).data('href');
+        let title = $(obj).text()
+        if (url !== ''){
+            layer.open({
+                type: 2, //类型，解析url
+                closeBtn: 1, //关闭按钮是否显示 1显示0不显示
+                title: title, //页面标题
+                shadeClose: true, //点击遮罩区域是否关闭页面
+                shade: 0.8,  //遮罩透明度
+                area: ['900px', '500px'],  //弹出层页面比例
+                content: url //弹出层的url
+            });
+        }
     }
 
     function openPage(url,title,id){
@@ -86,9 +105,7 @@ layui.extend({
     admin.indexPage.on('click', '*[ia-event]', function(){
         let _this = $(this)
             ,attrEvent = _this.attr('ia-event');
-        console.log(_this)
         if (admin[attrEvent]){
-
             admin[attrEvent].call(this, _this);
         }
     })
@@ -97,6 +114,7 @@ layui.extend({
     element.on('nav(side_menu)', function(elem){
         let href = $(elem).data('href');
         let hrefId = $(elem).attr('lay-id');
+        let openType = $(elem).attr('ia-open-type');
         handleTagChange(hrefId,href,elem.text())
     });
 
