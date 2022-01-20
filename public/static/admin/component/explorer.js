@@ -107,13 +107,11 @@ layui.extend({
                     obj.preview(function(index, file, result){
                         $('#demo1').attr('src', result); //图片链接（base64）
                     });
-                    console.log(1)
-                    $('.explorer_upload_progress').css("visibility","visible");
-                    element.progress('explorer_upload_progress', '0%'); //进度条复位
+                    showProgress()
                     // layer.msg('上传中', {icon: 16, time: 0});
                 }
                 ,done: function(res){
-                    $('.explorer_upload_progress').css("visibility","hidden");
+                    clearLoad()
                     //如果上传失败
                     if(res.code > 0){
                         return layer.msg('上传失败');
@@ -140,7 +138,7 @@ layui.extend({
                 }
                 //进度条
                 ,progress: function(n, elem, e){
-                    element.progress('explorer_upload_progress', n+'%')
+                    showProgress(n)
                     // element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
                     // if(n == 100){
                     //     layer.msg('上传完毕', {icon: 1});
@@ -239,19 +237,13 @@ layui.extend({
         explorer._this.children('.explorer_loading').remove()
     }
 
-    function showP(){
-        let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
-        loading(0,uploadProgress)
-        element.progress('explorer_upload_progress', 0+'%')
-        let num = 0;
-        let interval = setInterval(function () {
-            num+=1;
-            element.progress('explorer_upload_progress', num+'%')
-            if (num>=100){
-                clearInterval(interval)
-                clearLoad()
-            }
-        },100)
+    function showProgress(update){
+        if (update === undefined){
+            let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
+            loading(0,uploadProgress)
+            return element.progress('explorer_upload_progress', 0+'%');
+        }
+        element.progress('explorer_upload_progress', update+'%');
     }
 
 
@@ -294,7 +286,6 @@ layui.extend({
                 explorer._this = $(layerObj)
                 refreshList(getList())
                 initUploader()
-                showP()
                 // explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
                 // let upload_progress = 1;
                 // let interval = setInterval(function () {
