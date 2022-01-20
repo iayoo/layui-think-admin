@@ -737,7 +737,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     border-radius: 3px;
 }
 
-.layui-laypage span.layui-laypage-curr{
+.layui-table-page .layui-laypage span.layui-laypage-curr{
     margin-right: 5px;
     margin-left: 5px;
 }
