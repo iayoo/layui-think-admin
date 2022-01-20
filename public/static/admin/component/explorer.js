@@ -44,29 +44,38 @@ layui.extend({
 
     function getList(){
         return [
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.xls','ext':'xls'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.csv','ext':'csv'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.pdf','ext':'pdf'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.zip','ext':'zip'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'jpeg'},
         ];
+    }
+
+    function getItemHtml(item){
+        let title = '<div class="title"><p>' + item.title + '</p></div>';
+        let img = '';
+        if (item.ext === 'png' || item.ext === 'jpg' || item.ext === 'jpeg' || item.ext === 'svg'){
+            img = '<div class="image-show"><img src="'+ item.path + '" alt="' + item.title + '"></div>';
+        }else{
+            img = '<div class="image-show"><img class="file_icon" src="/static/admin/images/file-icon/'+ item.ext + '.png" alt="' + item.title + '"></div>';
+        }
+        let selectIcon = '<div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div>';
+
+        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + selectIcon + img + title +  '</div>';
     }
 
     function renderData(data){
         let explorerListDom = $('.explorer_file_list');
         data.map(function (item){
             explorerListDom.append(
-                '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+
-                item.id +'"><div class="file_del_btn" data-file-id="'+
-                item.id +'"></div><div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div><div class="image-show"><img src="'+ item.path +
-                '" alt="' + item.title + '"></div><div class="title"><p>' +
-                item.title + '</p></div></div></div>'
+                getItemHtml(item)
             );
         })
         // 监听事件

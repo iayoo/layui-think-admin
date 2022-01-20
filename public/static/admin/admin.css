@@ -842,6 +842,9 @@ div.layui-layer{
     font-size: 14px;
 }
 
+.explorer_file_list .file_item img.file_icon{
+    width: 48px;
+}
 .explorer_file_list .file_item .title{
     position: absolute;
     text-align: center;
