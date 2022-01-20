@@ -249,17 +249,17 @@ layui.extend({
         }
         html+='<div class="layui-form-item"><div class="layui-input-block">';
         if (explorer.is_search){
-            html+='<a class="layui-btn">搜索</a>';
+            html+='<button type="button" class="layui-btn">搜索</a>';
+        }
+        if (explorer.is_delete){
+            html+= '<button type="button" explorer-event="del" class="layui-btn layui-btn-danger">删除文件</button>'
         }
         if (explorer.is_upload){
             html+='<button type="button" class="layui-btn" id="explorer_file_uploader">上传文件</button>';
         }
-        if (explorer.is_delete){
-            html+= '<a explorer-event="del" class="layui-btn layui-btn-danger">删除文件</a>'
-        }
         html+='</div></div>';
         html+='</form></div>'
-        html+='</div><div class=\'explorer_file_list\'></div><div id=\'explorer_page\'></div>';
+        html+='</div><div class="explorer_file_list"></div><div id="explorer_page"></div>';
         return html;
     }
 
