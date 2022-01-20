@@ -177,7 +177,6 @@ layui.extend({
     }
 
     function handleSelected(obj){
-        console.log(explorer.images_selected)
         for (let i = 0; i <explorer.images_selected.length; i++) {
             if (explorer.images_selected[i].id === obj.data('file-id')){
                 explorer.images_selected.splice(i,1);
