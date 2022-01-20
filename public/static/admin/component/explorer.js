@@ -172,19 +172,20 @@ layui.extend({
     }
 
     function clearFileList(){
-        $('.explorer_file_list').html('')
+        $('.explorer_file_list').remove()
     }
 
     function refreshList(is_render_page){
-        let explorerListDom = $('.explorer_file_list');
         clearFileList();
+        $("#explorer").append('<div class="explorer_file_list"></div>');
+        let explorerListDom = $(".explorer_file_list");
         explorer.images.map(function (item){
             explorerListDom.append(
-                getItemHtml(item)
+                $(getItemHtml(item))
             );
         })
         // 监听事件
-        explorerListDom.on('click', '*[explorer-event]', function(){
+        explorerListDom.on('click', '*[explorer-event]', function(event){
             let _this = $(this);
             if (_this.hasClass('selected')){
                 _this.removeClass('selected')
@@ -203,9 +204,9 @@ layui.extend({
                     //obj包含了当前分页的所有参数，比如：
                     explorer.page.page = obj.curr;
                     explorer.page.limit = obj.limit;
-                    getList()
                     //首次不执行
                     if(!first){
+                        getList()
                         //do something
                     }else{
                     }
@@ -300,7 +301,7 @@ layui.extend({
         }
         html+='</div></div>';
         html+='</form></div>'
-        html+='</div><div class="explorer_file_list"></div>';
+        html+='</div>';
         return html;
     }
 
