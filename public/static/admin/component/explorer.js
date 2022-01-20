@@ -21,7 +21,8 @@ layui.extend({
         is_upload:true,
         is_file_search:true,
         is_file_filter:true,
-        is_search:true
+        is_search:true,
+        theme_color:undefined
     }
 
     function getFileTypes(){
@@ -171,7 +172,7 @@ layui.extend({
         laypage.render({
             elem: 'explorer_page'
             ,count: 100
-            ,theme: '#1E9FFF'
+            ,theme: '#043382'
         });
         render();
     }
@@ -259,7 +260,7 @@ layui.extend({
         }
         html+='</div></div>';
         html+='</form></div>'
-        html+='</div><div class="explorer_file_list"></div><div id="explorer_page"></div>';
+        html+='</div><div class="explorer_file_list"></div>';
         return html;
     }
 
@@ -298,6 +299,7 @@ layui.extend({
             ,success: function(layerObj, index){
                 form.render()
                 explorer._this = $(layerObj)
+                explorer._this.prepend('</div><div id="explorer_page">')
                 refreshList(getList())
                 initUploader()
             }
