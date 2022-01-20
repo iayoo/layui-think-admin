@@ -224,10 +224,13 @@ layui.extend({
         let icon = '<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>';
         let domHtml = "<div class='explorer_loading'><div class='icon_div'>" + icon + (append?append:'') +"</div></div>";
         explorer._this.append(domHtml)
-        if (time){
+        if (typeof time === 'number'){
             setTimeout(function () {
                 clearLoad()
             },time);
+        }
+        if (typeof time === 'function'){
+            return time()
         }
     }
 
