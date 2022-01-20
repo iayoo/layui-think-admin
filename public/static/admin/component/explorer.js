@@ -44,7 +44,8 @@ layui.extend({
         '  </div>' +
         '</form>' +
         '</div>';
-    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>";
+    let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
+    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>" + uploadProgress;
 
     function getList(){
         explorer.images = [
@@ -105,15 +106,18 @@ layui.extend({
                     obj.preview(function(index, file, result){
                         $('#demo1').attr('src', result); //图片链接（base64）
                     });
-
-                    element.progress('demo', '0%'); //进度条复位
-                    layer.msg('上传中', {icon: 16, time: 0});
+                    console.log(1)
+                    $('.explorer_upload_progress').css("visibility","visible");
+                    element.progress('explorer_upload_progress', '0%'); //进度条复位
+                    // layer.msg('上传中', {icon: 16, time: 0});
                 }
                 ,done: function(res){
+                    $('.explorer_upload_progress').css("visibility","hidden");
                     //如果上传失败
                     if(res.code > 0){
                         return layer.msg('上传失败');
                     }
+
                     //上传成功的一些操作
                     // 删除最后一个元素
                     $('.explorer_file_list .file_item:last').remove();
@@ -124,7 +128,6 @@ layui.extend({
                         size:res.data.size,
                         id:res.data.id,
                     }))
-                    $('#demoText').html(''); //置空上传失败的状态
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传
@@ -136,10 +139,11 @@ layui.extend({
                 }
                 //进度条
                 ,progress: function(n, elem, e){
-                    element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
-                    if(n == 100){
-                        layer.msg('上传完毕', {icon: 1});
-                    }
+                    element.progress('explorer_upload_progress', n+'%')
+                    // element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                    // if(n == 100){
+                    //     layer.msg('上传完毕', {icon: 1});
+                    // }
                 }
             });
         }
@@ -260,6 +264,14 @@ layui.extend({
                 explorer._this = $(layerObj)
                 refreshList(getList())
                 initUploader()
+                // let upload_progress = 1;
+                // let interval = setInterval(function () {
+                //     upload_progress+=1;
+                //     element.progress('explorer_upload_progress', upload_progress+'%')
+                //     if (upload_progress>=100){
+                //         clearInterval(interval);
+                //     }
+                // },50)
             }
             ,end: function(){
                 //更新索引

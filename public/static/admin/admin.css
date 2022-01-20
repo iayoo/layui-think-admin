@@ -904,3 +904,18 @@ div.layui-layer{
     color: var(--bg-color);
 }
 
+.explorer_upload_progress {
+    width: 100%;
+    height: 100%;
+    background: #0003;
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+}
+.explorer_upload_progress > div{
+    width: 50%;
+}
+
