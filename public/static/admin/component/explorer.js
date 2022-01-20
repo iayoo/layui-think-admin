@@ -349,6 +349,7 @@ layui.extend({
                 if (explorer.selected !== undefined){
                     if (explorer.selected(explorer.images_selected)){
                         layer.close(index)
+                        explorer.images_selected=[];
                     }
                 }
             }
