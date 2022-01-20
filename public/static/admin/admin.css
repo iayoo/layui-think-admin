@@ -918,3 +918,15 @@ div.layui-layer{
     background-color: var(--bg-color);
 }
 
+#explorer_page .layui-laypage a,#explorer_page .layui-laypage .layui-laypage-spr{
+    margin: 0 3px 5px 3px;
+    border-color: #fff;
+    border-radius: 3px;
+    transition: all .2s linear;
+}
+#explorer_page .layui-laypage a:hover{
+    color: var(--bg-color);
+    border-color: var(--bg-color);
+    z-index: 1;
+    border: 1px solid;
+}
