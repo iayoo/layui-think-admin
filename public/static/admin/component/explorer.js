@@ -15,38 +15,26 @@ layui.extend({
         upload:undefined,
         images:[],
         loading:loading,
-        clearLoad:clearLoad
+        clearLoad:clearLoad,
+        file_type:[],
+        is_delete:true,
+        is_upload:true,
+        is_file_search:true,
+        is_file_filter:true,
+        is_search:true
     }
-    let searchContain = '<div class="search">' +
-        '<form class="layui-form" action="">' +
-        '  <div class="layui-form-item">' +
-        '    <label class="layui-form-label">文件搜索</label>' +
-        '    <div class="layui-input-block">' +
-        '      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">' +
-        '    </div>' +
-        '  </div>' +
-        ' <div class="layui-form-item" pane="">' +
-        '    <label class="layui-form-label">文件类型</label>' +
-        '    <div class="layui-input-block">' +
-        '      <input type="checkbox" name="type[all]" lay-skin="primary" title="所有">' +
-        '      <input type="checkbox" name="type[mp3]" lay-skin="primary" title="mp3">' +
-        '      <input type="checkbox" name="type[mp4]" lay-skin="primary" title="mp4">' +
-        '      <input type="checkbox" name="type[jpeg]" lay-skin="primary" title="jpeg">' +
-        '      <input type="checkbox" name="type[jpg]" lay-skin="primary" title="jpg">' +
-        '      <input type="checkbox" name="type[png]" lay-skin="primary" title="png">' +
-        '      <input type="checkbox" name="type[xls]" lay-skin="primary" title="xls">' +
-        '      <input type="checkbox" name="type[xlsx]" lay-skin="primary" title="xlsx">' +
-        '      <input type="checkbox" name="type[csv]" lay-skin="primary" title="csv">' +
-        '    </div>' +
-        '  </div>'+
-        '  <div class="layui-form-item">' +
-        '    <div class="layui-input-block">' +
-        '      <a class="layui-btn" style="margin-right: 8px">搜索</a><button type="button" class="layui-btn" style="margin-right: 8px" id="explorer_file_uploader">上传文件</button><a explorer-event="del" class="layui-btn layui-btn-danger">删除文件</a>' +
-        '    </div>' +
-        '  </div>' +
-        '</form>' +
-        '</div>';
-    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>";
+
+    function getFileTypes(){
+        let returnType = ['all'];
+        if (explorer.file_type.length<=0){
+            returnType = ['all','mp3','jpeg','jpg','png','xls','xlsx','csv']
+        }else{
+            explorer.file_type.map(function (item) {
+                returnType.push(item)
+            })
+        }
+        return returnType;
+    }
 
     function getList(){
         explorer.images = [
@@ -242,6 +230,39 @@ layui.extend({
         element.progress('explorer_upload_progress', update+'%');
     }
 
+    function getContentHtml(){
+        let html = "<div class='explorer_contain'>";
+        html+='<div class="search"><form class="layui-form" action="">';
+        if (explorer.is_file_search){
+            html += '<div class="layui-form-item"><label class="layui-form-label">文件搜索</label><div class="layui-input-block"><input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入文件关键字" class="layui-input"></div></div>';
+        }
+        if (explorer.is_file_filter){
+            html+='<div class="layui-form-item" pane=""><label class="layui-form-label">文件类型</label><div class="layui-input-block">';
+            getFileTypes().map(function (item) {
+                if (item === 'all'){
+                    html+='<input type="checkbox" name="type[all]" lay-skin="primary" title="所有">'
+                }else{
+                    html+='<input type="checkbox" name="type['+ item +']" lay-skin="primary" title="' + item + '">'
+                }
+            })
+            html+='</div></div>';
+        }
+        html+='<div class="layui-form-item"><div class="layui-input-block">';
+        if (explorer.is_search){
+            html+='<a class="layui-btn">搜索</a>';
+        }
+        if (explorer.is_upload){
+            html+='<button type="button" class="layui-btn" id="explorer_file_uploader">上传文件</button>';
+        }
+        if (explorer.is_delete){
+            html+= '<a explorer-event="del" class="layui-btn layui-btn-danger">删除文件</a>'
+        }
+        html+='</div></div>';
+        html+='</form></div>'
+        html+='</div><div class=\'explorer_file_list\'></div><div id=\'explorer_page\'></div>';
+        return html;
+    }
+
     function open(){
         //多窗口模式，层叠置顶
         layer.open({
@@ -251,7 +272,7 @@ layui.extend({
             ,shade: 0
             ,maxmin: true
             ,id:'explorer'
-            ,content: contentHtml
+            ,content: getContentHtml()
             ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(index){
                 if (explorer.selected !== undefined){
