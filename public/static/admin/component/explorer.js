@@ -91,7 +91,6 @@ layui.extend({
     }
 
     function initUploader(){
-
         if (typeof explorer.upload === 'function'){
             explorer.upload();
         }else{
@@ -102,11 +101,10 @@ layui.extend({
                 ,url: explorer.upload //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
                 ,before: function(obj){
                     //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#demo1').attr('src', result); //图片链接（base64）
-                    });
+                    // obj.preview(function(index, file, result){
+                    //     $('#demo1').attr('src', result); //图片链接（base64）
+                    // });
                     showProgress()
-                    // layer.msg('上传中', {icon: 16, time: 0});
                 }
                 ,done: function(res){
                     clearLoad()
@@ -114,7 +112,6 @@ layui.extend({
                     if(res.code > 0){
                         return layer.msg('上传失败');
                     }
-
                     //上传成功的一些操作
                     // 删除最后一个元素
                     $('.explorer_file_list .file_item:last').remove();
@@ -175,9 +172,7 @@ layui.extend({
         })
         // 监听事件
         explorerListDom.on('click', '*[explorer-event]', function(){
-            let _this = $(this)
-                ,attrEvent = _this.attr('explorer-event'),
-                id = _this.data('file-id');
+            let _this = $(this);
             if (_this.hasClass('selected')){
                 _this.removeClass('selected')
             }else{
@@ -240,16 +235,14 @@ layui.extend({
 
     function showProgress(update){
         if (update === undefined){
-            let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
+            let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress" class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="0%"></div></div></div>';
             loading(0,uploadProgress)
             return element.progress('explorer_upload_progress', 0+'%');
         }
         element.progress('explorer_upload_progress', update+'%');
     }
 
-
     function open(){
-
         //多窗口模式，层叠置顶
         layer.open({
             type: 1 //此处以iframe举例
@@ -259,7 +252,6 @@ layui.extend({
             ,maxmin: true
             ,id:'explorer'
             ,content: contentHtml
-
             ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(index){
                 if (explorer.selected !== undefined){
@@ -287,15 +279,6 @@ layui.extend({
                 explorer._this = $(layerObj)
                 refreshList(getList())
                 initUploader()
-                // explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
-                // let upload_progress = 1;
-                // let interval = setInterval(function () {
-                //     upload_progress+=1;
-                //     element.progress('explorer_upload_progress', upload_progress+'%')
-                //     if (upload_progress>=100){
-                //         clearInterval(interval);
-                //     }
-                // },50)
             }
             ,end: function(){
                 //更新索引
