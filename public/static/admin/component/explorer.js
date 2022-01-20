@@ -13,6 +13,7 @@ layui.extend({
         selected:undefined,
         url:undefined,
         upload:undefined,
+        delete_url:undefined,
         images:[],
         loading:loading,
         clearLoad:clearLoad,
@@ -123,14 +124,15 @@ layui.extend({
                     }
                     //上传成功的一些操作
                     // 删除最后一个元素
-                    $('.explorer_file_list .file_item:last').remove();
-                    $('.explorer_file_list').prepend(getItemHtml({
-                        path:res.data.path,
-                        title:res.data.title,
-                        ext:res.data.ext,
-                        size:res.data.size,
-                        id:res.data.id,
-                    }))
+                    // $('.explorer_file_list .file_item:last').remove();
+                    // $('.explorer_file_list').prepend(getItemHtml({
+                    //     path:res.data.path,
+                    //     title:res.data.title,
+                    //     ext:res.data.ext,
+                    //     size:res.data.size,
+                    //     id:res.data.id,
+                    // }))
+                    getList(true)
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传
@@ -244,6 +246,22 @@ layui.extend({
         clearLoad()
     }
 
+    function submitDelete(){
+        loading();
+        $.ajax({
+            url:explorer.delete_url,
+            type:"POST",
+            data:{file:explorer.images_selected},
+            success:function (res) {
+                clearLoad()
+                if (res.code === 0){
+                    getList(true)
+                }else{
+
+                }
+            }
+        })
+    }
 
     function render(){
         $(".explorer_contain > .search").on('click','*[explorer-event]',function(){
@@ -264,7 +282,7 @@ layui.extend({
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
                     parent.layer.close(index)
-                    loading(1500);
+                    submitDelete()
                 });
             }
         })
