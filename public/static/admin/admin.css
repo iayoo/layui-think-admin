@@ -875,11 +875,13 @@ div.layui-layer{
 }
 
 #explorer_page{
-    position: absolute;
+    position: sticky;
     bottom: 0;
     width: 100%;
     display: flex;
     justify-content: center;
+    background-color: #fff;
+    box-shadow: 1px -1px 6px #8B00FF1A;
 }
 
 .explorer_loading{
