@@ -36,7 +36,9 @@ class File extends BaseController
     }
 
     public function delete(){
-        $res = Db::name('files')->where('id',$this->request->param('id',0))->delete();
+        $files = $this->request->param('file');
+        $ids = array_column($files,'id');
+        $res = Db::name('files')->whereIn('id',$ids)->delete();
         if ($res){
             return json(['code'=>0,'message'=>'success']);
         }else{
