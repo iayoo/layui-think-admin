@@ -22,6 +22,7 @@
         let $ = layui.jquery;
         let explorer = layui.explorer;
         let element = layui.element;
+        explorer.upload = '{:url("file/upload")}'
 
         $("#open_file_manager").on("click",function (obj) {
             explorer.open();

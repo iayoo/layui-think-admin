@@ -1,15 +1,19 @@
 layui.extend({
 
-}).define(['element','jquery','layer','form','laypage'], function(exports) {
+}).define(['element','jquery','layer','form','laypage','upload'], function(exports) {
     let layer = layui.layer;
     let $ = layui.jquery;
     let element = layui.element;
     let form = layui.form;
     let laypage = layui.laypage;
+    let upload = layui.upload;
     let explorer = {
         open:open,
         _this:null,
-        selected:undefined
+        selected:undefined,
+        url:'',
+        upload:undefined,
+        images:[]
     }
     let searchContain = '<div class="search">' +
         '<form class="layui-form" action="">' +
@@ -35,7 +39,7 @@ layui.extend({
         '  </div>'+
         '  <div class="layui-form-item">' +
         '    <div class="layui-input-block">' +
-        '      <a class="layui-btn" style="margin-right: 8px">搜索<a><a class="layui-btn" style="margin-right: 8px">上传文件<a><a explorer-event="del" class="layui-btn layui-btn-danger">删除文件<a>' +
+        '      <a class="layui-btn" style="margin-right: 8px">搜索</a><button type="button" class="layui-btn" style="margin-right: 8px" id="explorer_file_uploader">上传文件</button><a explorer-event="del" class="layui-btn layui-btn-danger">删除文件</a>' +
         '    </div>' +
         '  </div>' +
         '</form>' +
@@ -43,15 +47,10 @@ layui.extend({
     let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>";
 
     function getList(){
-        return [
+        explorer.images = [
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.xls','ext':'xls',size:'55555'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.csv','ext':'csv',size:'55555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.pdf','ext':'pdf'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.zip','ext':'zip'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'555'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'jpeg',size:'4508876.8'},
@@ -89,6 +88,65 @@ layui.extend({
         return fat_size+unit;
     }
 
+    function uploaderLoading(){}
+
+    function initUploader(){
+
+        if (typeof explorer.upload === 'function'){
+            explorer.upload();
+        }else{
+            //常规使用 - 普通图片上传
+            let uploadInst = upload.render({
+                elem: '#explorer_file_uploader'
+                ,accept:'file'
+                ,url: explorer.upload //此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+
+                    element.progress('demo', '0%'); //进度条复位
+                    layer.msg('上传中', {icon: 16, time: 0});
+                }
+                ,done: function(res){
+                    //如果上传失败
+                    if(res.code > 0){
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功的一些操作
+                    // 删除最后一个元素
+                    $('.explorer_file_list .file_item:last').remove();
+                    $('.explorer_file_list').prepend(getItemHtml({
+                        path:res.data.path,
+                        title:res.data.title,
+                        ext:res.data.ext,
+                        size:res.data.size,
+                        id:res.data.id,
+                    }))
+                    $('#demoText').html(''); //置空上传失败的状态
+                }
+                ,error: function(){
+                    //演示失败状态，并实现重传
+                    // var demoText = $('#demoText');
+                    // demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    // demoText.find('.demo-reload').on('click', function(){
+                    //     uploadInst.upload();
+                    // });
+                }
+                //进度条
+                ,progress: function(n, elem, e){
+                    element.progress('demo', n + '%'); //可配合 layui 进度条元素使用
+                    if(n == 100){
+                        layer.msg('上传完毕', {icon: 1});
+                    }
+                }
+            });
+        }
+    }
+
+    // function
+
     function getItemHtml(item){
         let title = '<div class="title"><p>' + item.title + '</p></div>';
         let img = '';
@@ -107,9 +165,9 @@ layui.extend({
         return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title +  '</div>';
     }
 
-    function renderData(data){
+    function refreshList(){
         let explorerListDom = $('.explorer_file_list');
-        data.map(function (item){
+        explorer.images.map(function (item){
             explorerListDom.append(
                 getItemHtml(item)
             );
@@ -125,7 +183,16 @@ layui.extend({
                 _this.addClass('selected')
             }
         })
+        //自定义样式
+        laypage.render({
+            elem: 'explorer_page'
+            ,count: 100
+            ,theme: '#1E9FFF'
+        });
+        render();
+    }
 
+    function render(){
         $(".explorer_contain > .search").on('click','*[explorer-event]',function(){
             let _this = $(this)
                 ,attrEvent = _this.attr('explorer-event'),
@@ -152,15 +219,7 @@ layui.extend({
                 });
             }
         })
-
-        //自定义样式
-        laypage.render({
-            elem: 'explorer_page'
-            ,count: 100
-            ,theme: '#1E9FFF'
-        });
     }
-
 
     function open(){
 
@@ -199,7 +258,8 @@ layui.extend({
             ,success: function(layerObj, index){
                 form.render()
                 explorer._this = $(layerObj)
-                renderData(getList())
+                refreshList(getList())
+                initUploader()
             }
             ,end: function(){
                 //更新索引
