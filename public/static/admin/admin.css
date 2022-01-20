@@ -800,6 +800,7 @@ div.layui-layer{
 .explorer_file_list .file_item .image-show img{
 
 }
+
 .explorer_file_list .file_item:after{
     content: "";
     width: 141px;
@@ -849,13 +850,18 @@ div.layui-layer{
     position: absolute;
     text-align: center;
     width: 141px;
-    bottom: -26px;
-    height: 26px;
+    bottom: -30px;
+    height: 30px;
     left: 2px;
     background-color: var(--bg-color);
     color: #F2F2F2;
-    line-height: 26px;
+    line-height: 30px;
     font-size: 12px;
+    transition-duration: .3s, 1s;
+    border-radius: 0 0 5px 5px;
+}
+.explorer_file_list .file_item:hover .title{
+    transform: translateY(-30px);
 }
 
 #explorer_page{
