@@ -13,7 +13,9 @@ layui.extend({
         selected:undefined,
         url:'',
         upload:undefined,
-        images:[]
+        images:[],
+        loading:loading,
+        clearLoad:clearLoad
     }
     let searchContain = '<div class="search">' +
         '<form class="layui-form" action="">' +
@@ -216,14 +218,28 @@ layui.extend({
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
                     layer.close(index)
-                    explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
-                    setTimeout(function () {
-                        explorer._this.children('.explorer_loading').remove()
-                    },1500)
+                    loading(1500);
                 });
             }
         })
     }
+
+    function loading(time,append){
+        // 基于整个弹出层的loading
+        let icon = '<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>';
+        let domHtml = "<div class='explorer_loading'><div class='icon_div'>" + icon +"</div> " + append +  "</div>";
+        explorer._this.append(domHtml)
+        if (time){
+            setTimeout(function () {
+                clearLoad()
+            },time);
+        }
+    }
+
+    function clearLoad(){
+        explorer._this.children('.explorer_loading').remove()
+    }
+
 
     function open(){
 
@@ -264,6 +280,7 @@ layui.extend({
                 explorer._this = $(layerObj)
                 refreshList(getList())
                 initUploader()
+                // explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
                 // let upload_progress = 1;
                 // let interval = setInterval(function () {
                 //     upload_progress+=1;
