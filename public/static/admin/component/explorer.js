@@ -11,7 +11,7 @@ layui.extend({
         open:open,
         _this:null,
         selected:undefined,
-        url:'',
+        url:undefined,
         upload:undefined,
         images:[],
         loading:loading,
@@ -22,7 +22,12 @@ layui.extend({
         is_file_search:true,
         is_file_filter:true,
         is_search:true,
-        theme_color:undefined
+        theme_color:undefined,
+        page:{
+            count:0,
+            page:1,
+            limit:10
+        }
     }
 
     function getFileTypes(){
@@ -37,15 +42,29 @@ layui.extend({
         return returnType;
     }
 
-    function getList(){
-        explorer.images = [
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.xls','ext':'xls',size:'55555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.csv','ext':'csv',size:'55555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'555'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'jpeg',size:'4508876.8'},
-        ];
+    function getList(isFirst){
+        loading();
+        $.ajax({
+            url:explorer.url,
+            type:"GET",
+            data:explorer.page,
+            success:function (res) {
+                if (res.code === 0){
+                    explorer.images = [];
+                    explorer.page.count = res.data.count;
+                    res.data.list.map(function (item) {
+                        explorer.images.push({
+                            id:item.id,
+                            path:item.path,
+                            size:item.size,
+                            ext:item.ext,
+                            title:item.filename,
+                        });
+                    })
+                    refreshList(isFirst)
+                }
+            }
+        })
     }
 
     function sizeFormat(size){
@@ -152,8 +171,13 @@ layui.extend({
         return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title +  '</div>';
     }
 
-    function refreshList(){
+    function clearFileList(){
+        $('.explorer_file_list').html('')
+    }
+
+    function refreshList(is_render_page){
         let explorerListDom = $('.explorer_file_list');
+        clearFileList();
         explorer.images.map(function (item){
             explorerListDom.append(
                 getItemHtml(item)
@@ -168,14 +192,30 @@ layui.extend({
                 _this.addClass('selected')
             }
         })
-        //自定义样式
-        laypage.render({
-            elem: 'explorer_page'
-            ,count: 100
-            ,theme: '#043382'
-        });
+
+        if (is_render_page){
+            //自定义样式
+            laypage.render({
+                elem: 'explorer_page'
+                ,count: explorer.page.count
+                ,theme: '#043382'
+                ,jump: function(obj, first){
+                    //obj包含了当前分页的所有参数，比如：
+                    explorer.page.page = obj.curr;
+                    explorer.page.limit = obj.limit;
+                    getList()
+                    //首次不执行
+                    if(!first){
+                        //do something
+                    }else{
+                    }
+                }
+            });
+        }
+        clearLoad()
         render();
     }
+
 
     function render(){
         $(".explorer_contain > .search").on('click','*[explorer-event]',function(){
@@ -300,7 +340,7 @@ layui.extend({
                 form.render()
                 explorer._this = $(layerObj)
                 explorer._this.prepend('</div><div id="explorer_page">')
-                refreshList(getList())
+                getList(true)
                 initUploader()
             }
             ,end: function(){
