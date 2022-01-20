@@ -905,20 +905,13 @@ div.layui-layer{
 }
 
 .explorer_upload_progress {
-    width: 100%;
+    width: 50%;
     height: 100%;
-    background: #fff3;
     position: absolute;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    visibility: hidden;
+    left: 25%;
+    margin-top: 15px;
 }
 .explorer_upload_progress > div .layui-progress-bar{
     background-color: var(--bg-color);
-}
-.explorer_upload_progress > div{
-    width: 50%;
 }
 

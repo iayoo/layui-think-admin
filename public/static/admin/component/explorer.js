@@ -46,8 +46,7 @@ layui.extend({
         '  </div>' +
         '</form>' +
         '</div>';
-    let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
-    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>" + uploadProgress;
+    let contentHtml = "<div class='explorer_contain'>" + searchContain + "</div><div class='explorer_file_list'></div><div id='explorer_page'></div>";
 
     function getList(){
         explorer.images = [
@@ -227,7 +226,7 @@ layui.extend({
     function loading(time,append){
         // 基于整个弹出层的loading
         let icon = '<i class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop"></i>';
-        let domHtml = "<div class='explorer_loading'><div class='icon_div'>" + icon +"</div> " + append +  "</div>";
+        let domHtml = "<div class='explorer_loading'><div class='icon_div'>" + icon + append +"</div></div>";
         explorer._this.append(domHtml)
         if (time){
             setTimeout(function () {
@@ -238,6 +237,21 @@ layui.extend({
 
     function clearLoad(){
         explorer._this.children('.explorer_loading').remove()
+    }
+
+    function showP(){
+        let uploadProgress = '<div class="explorer_upload_progress" ><div lay-filter="explorer_upload_progress"  class="layui-progress layui-progress-big" lay-showpercent="true"><div class="layui-progress-bar" lay-percent="2%"></div></div></div>';
+        loading(0,uploadProgress)
+        element.progress('explorer_upload_progress', 0+'%')
+        let num = 0;
+        let interval = setInterval(function () {
+            num+=1;
+            element.progress('explorer_upload_progress', num+'%')
+            if (num>=100){
+                clearInterval(interval)
+                clearLoad()
+            }
+        },100)
     }
 
 
@@ -280,6 +294,7 @@ layui.extend({
                 explorer._this = $(layerObj)
                 refreshList(getList())
                 initUploader()
+                showP()
                 // explorer._this.append("<div class='explorer_loading'><div class='icon_div'><i class=\"layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop\"></i></div></div>")
                 // let upload_progress = 1;
                 // let interval = setInterval(function () {
