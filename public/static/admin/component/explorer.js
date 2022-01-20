@@ -44,23 +44,59 @@ layui.extend({
 
     function getList(){
         return [
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.xls','ext':'xls'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.csv','ext':'csv'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.xls','ext':'xls',size:'55555'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.csv','ext':'csv',size:'55555'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.pdf','ext':'pdf'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.zip','ext':'zip'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
             {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png'},
-            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'jpeg'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'55555'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'png',size:'555'},
+            {'id':1,'title':'测试1.png','path':'/static/admin/images/v2-3b4fc7e3a1195a081d0259246c38debc_1440w.jpeg','ext':'jpeg',size:'4508876.8'},
         ];
+    }
+
+    function sizeFormat(size){
+        let fat_size = 0;
+        let unit = '';
+        if (size>1024*1024*1024){
+            // 大于Gm
+            unit = 'Gb';
+            fat_size = (size/(1024*1024*1024)).toFixed(2);
+        }else if(size > 1024*1024){
+            unit = 'mb';
+            fat_size = (size/(1024*1024)).toFixed(2);
+            if (fat_size > 100){
+                fat_size = (fat_size/1024).toFixed(2);
+                unit = 'Gb';
+            }
+        }else if (size > 1024){
+            unit = 'kb';
+            fat_size = (size/(1024)).toFixed(2);
+            if (fat_size > 100){
+                fat_size = (fat_size/1024).toFixed(2);
+                unit = 'mb';
+            }
+        }else {
+            fat_size = size;
+            if (fat_size > 100){
+                fat_size = (fat_size/1024).toFixed(2);
+                unit = 'kb';
+            }
+        }
+        return fat_size+unit;
     }
 
     function getItemHtml(item){
         let title = '<div class="title"><p>' + item.title + '</p></div>';
         let img = '';
+        let size = "";
+        if (item.size !== undefined){
+
+            size = "<div class='file_size'><p>" + sizeFormat(item.size) + "</p></div>";
+        }
         if (item.ext === 'png' || item.ext === 'jpg' || item.ext === 'jpeg' || item.ext === 'svg'){
             img = '<div class="image-show"><img src="'+ item.path + '" alt="' + item.title + '"></div>';
         }else{
@@ -68,7 +104,7 @@ layui.extend({
         }
         let selectIcon = '<div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div>';
 
-        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + selectIcon + img + title +  '</div>';
+        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title +  '</div>';
     }
 
     function renderData(data){
