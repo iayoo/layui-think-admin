@@ -242,7 +242,6 @@ layui.extend({
             });
         }
         clearLoad()
-        render();
     }
 
 
@@ -253,19 +252,18 @@ layui.extend({
                 id = _this.data('file-id');
             if (attrEvent === 'del'){
                 //询问框
-                let selectedList = $('.explorer_file_list .selected');
-                if (selectedList.length <= 0){
+                if (explorer.images_selected.length <= 0){
                     return;
                 }
-                layer.confirm('确认删除'+ selectedList.length +'个文件？', {
+                parent.layer.confirm('确认删除'+ explorer.images_selected.length +'个文件？', {
                     title:'确认删除？',
                     success:function (layero) {
-                        layer.setTop(layero); //重点2
+                        // layer.setTop(layero); //重点2
                     },
-                    zIndex: layer.zIndex,
+                    // zIndex: layer.zIndex,
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
-                    layer.close(index)
+                    parent.layer.close(index)
                     loading(1500);
                 });
             }
@@ -332,7 +330,7 @@ layui.extend({
         html+='</div>';
         return html;
     }
-
+    let del = 0;
     function open(){
         //多窗口模式，层叠置顶
         layer.open({
@@ -358,6 +356,7 @@ layui.extend({
 
             ,zIndex: layer.zIndex //重点1
             ,success: function(layerObj, index){
+                render();
                 form.render()
                 explorer._this = $(layerObj)
                 explorer._this.prepend('</div><div id="explorer_page">')
