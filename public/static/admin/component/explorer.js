@@ -164,14 +164,18 @@ layui.extend({
 
             size = "<div class='file_size'><p>" + sizeFormat(item.size) + "</p></div>";
         }
+        let magnifying ='';
         if (item.ext === 'png' || item.ext === 'jpg' || item.ext === 'jpeg' || item.ext === 'svg'){
             img = '<div class="image-show"><img src="'+ item.path + '" alt="' + item.title + '"></div>';
+            magnifying = '<div class="file_image_magnifying" ><i class="layui-icon layui-icon-search" explorer-event="show"></i></div>';
         }else{
             img = '<div class="image-show"><img class="file_icon" src="/static/admin/images/file-icon/'+ item.ext + '.png" alt="' + item.title + '"></div>';
         }
         let selectIcon = '<div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div>';
 
-        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title +  '</div>';
+
+
+        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title + magnifying + '</div>';
     }
 
     function clearFileList(){
@@ -216,12 +220,20 @@ layui.extend({
         // 监听事件
         explorerListDom.on('click', '*[explorer-event]', function(event){
             let _this = $(this);
-            if (_this.hasClass('selected')){
-                _this.removeClass('selected')
-            }else{
-                _this.addClass('selected')
+            let attrEvent = _this.attr('explorer-event');
+            if (attrEvent === 'select'){
+                if (_this.hasClass('selected')){
+                    _this.removeClass('selected')
+                }else{
+                    _this.addClass('selected')
+                }
+                handleSelected(_this)
             }
-            handleSelected(_this)
+
+            if (attrEvent === 'show'){
+                console.log("show")
+            }
+
         })
 
         if (is_render_page){
@@ -256,6 +268,7 @@ layui.extend({
                 clearLoad()
                 if (res.code === 0){
                     getList(true)
+                    explorer.images_selected = []
                 }else{
 
                 }
