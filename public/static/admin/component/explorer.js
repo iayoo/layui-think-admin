@@ -27,7 +27,8 @@ layui.extend({
             count:0,
             page:1,
             limit:10
-        }
+        },
+        images_selected:[]
     }
 
     function getFileTypes(){
@@ -175,14 +176,41 @@ layui.extend({
         $('.explorer_file_list').remove()
     }
 
+    function handleSelected(obj){
+        console.log(explorer.images_selected)
+        for (let i = 0; i <explorer.images_selected.length; i++) {
+            if (explorer.images_selected[i].id === obj.data('file-id')){
+                explorer.images_selected.splice(i,1);
+                return;
+            }
+        }
+        explorer.images_selected.push({
+            id:obj.data('file-id'),
+            path:obj.data('href'),
+        })
+    }
+
     function refreshList(is_render_page){
         clearFileList();
         $("#explorer").append('<div class="explorer_file_list"></div>');
         let explorerListDom = $(".explorer_file_list");
         explorer.images.map(function (item){
-            explorerListDom.append(
-                $(getItemHtml(item))
-            );
+            let selected = false;
+            explorer.images_selected.map(function (img) {
+                if (item.id === img.id){
+                    selected = true
+                }
+            })
+            if (selected){
+                explorerListDom.append(
+                    $(getItemHtml(item)).addClass('selected')
+                );
+            }else{
+                explorerListDom.append(
+                    $(getItemHtml(item))
+                );
+            }
+
         })
         // 监听事件
         explorerListDom.on('click', '*[explorer-event]', function(event){
@@ -192,6 +220,7 @@ layui.extend({
             }else{
                 _this.addClass('selected')
             }
+            handleSelected(_this)
         })
 
         if (is_render_page){
@@ -318,16 +347,7 @@ layui.extend({
             ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(index){
                 if (explorer.selected !== undefined){
-                    let selectedList = $('.explorer_file_list .selected');
-                    let data = [];
-                    for (let i = 0; i < selectedList.length; i++) {
-                        let o_this = $(selectedList[i])
-                        data.push({
-                            'id':o_this.data('file-id'),
-                            'href':o_this.data('href'),
-                        })
-                    }
-                    if (explorer.selected(data)){
+                    if (explorer.selected(explorer.images_selected)){
                         layer.close(index)
                     }
                 }

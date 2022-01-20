@@ -30,7 +30,7 @@ class File extends BaseController
     }
 
     public function index(){
-        $list = Db::name('files')->where([])->limit($this->request->param('page',1),$this->request->param('limit',10))->select();
+        $list = Db::name('files')->where([])->page($this->request->param('page',1),$this->request->param('limit',10))->select();
         $count = Db::name('files')->where([])->count();
         return json(['code'=>0,'data'=>['list'=>$list,'count'=>$count]]);
     }
