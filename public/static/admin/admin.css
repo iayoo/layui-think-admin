@@ -915,6 +915,9 @@ div.layui-layer{
     align-items: center;
     visibility: hidden;
 }
+.explorer_upload_progress > div .layui-progress-bar{
+    background-color: var(--bg-color);
+}
 .explorer_upload_progress > div{
     width: 50%;
 }
