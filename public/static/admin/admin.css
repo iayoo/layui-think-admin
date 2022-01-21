@@ -167,7 +167,7 @@
 }
 
 .layui-form-select .layui-edge{
-    font-family: layui-icon!important;
+    font-family: layui-icon !important;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -846,9 +846,13 @@ i.layui-icon{
 
 }
 
-/*.layui-side-shrink .layui-side-scroll .layui-logo{*/
-/*    background-image: url(../layui/images/logo.png);*/
-/*}*/
+.layui-side-shrink .layui-side-scroll .layui-logo{
+    background-image: url(./images/logo.png);
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position-x: 15px;
+    background-position-y: 9px;
+}
 /*兼容pc缩进菜单 end*/
 
 /* 资源管理器 */
