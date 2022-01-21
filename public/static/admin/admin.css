@@ -666,13 +666,19 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     width: 100%;
 }
 
+.layui-tab-title li .layui-tab-close{
+    padding: 1px;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    text-align: center;
+    font-size: 13px;
+}
 .layui-tab-title li .layui-tab-close:hover{
     background-color: var(--td-brand-color-1);
     color: #fff;
-    border-radius: 30px;
-    height: 18px;
-    width: 18px;
-    line-height: 18px;
+    border-radius: 50%;
 }
 
 .layui-layout-admin .layui-tab-title li.layui-this:after{
