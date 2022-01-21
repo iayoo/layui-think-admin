@@ -791,7 +791,7 @@ i.layui-icon{
 /*}*/
 .layui-side-shrink .layui-nav-itemed>.layui-nav-child,
 .layui-side-shrink .layui-nav-tree .layui-nav-item > a > i.layui-nav-more{
-    display:none !important;
+    display:none ;
 }
 .layui-side-shrink .layui-nav-tree .layui-nav-item > a > i{
     margin-right: 2px;
@@ -800,6 +800,27 @@ i.layui-icon{
 .layui-side-shrink .layui-nav-tree .layui-nav-item > a{
     width: 18px;
     padding: 0 10px;
+}
+
+.layui-side-shrink .layui-nav-tree dl.layui-nav-child{
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: var(--bg-color);
+    display: none;
+    position: fixed;
+    min-width: 132px;
+    margin-left: 71px;
+    box-shadow: 0px 0px 3px lightgrey;
+    padding: 10px 8px;
+}
+
+.layui-side-shrink .layui-nav-tree dl.layui-nav-child a > span.title{
+    /*color: !important;*/
+    display: block !important;
+}
+
+.layui-nac-child-hover{
+
 }
 
 /*.layui-side-shrink .layui-side-scroll .layui-logo{*/
