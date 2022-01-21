@@ -30,7 +30,7 @@ class File extends BaseController
     }
 
     public function index(){
-        $type = $this->request->param('type',[]);
+        $type = $this->request->param('file_type',[]);
         $where = [];
         if ($type){
             $where[] = ['ext','IN',$type];
@@ -40,7 +40,7 @@ class File extends BaseController
             $where[] = ['filename','LIKE',"%{$keyword}%"];
         }
         $list = Db::name('files')->where($where)->page($this->request->param('page',1),$this->request->param('limit',10))->select();
-        $count = Db::name('files')->where([])->count();
+        $count = Db::name('files')->where($where)->count();
         return json(['code'=>0,'data'=>['list'=>$list,'count'=>$count]]);
     }
 
