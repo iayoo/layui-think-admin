@@ -166,6 +166,29 @@
     left: var(--side-width);
 }
 
+.layui-form-select .layui-edge{
+    font-family: layui-icon!important;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 6px;
+    border: none;
+    height: 17px;
+    width: 17px;
+    transform-origin: center;
+    text-align: center;
+    line-height: 17px;
+    top: 9px;
+    margin-top: 0;
+    color: var(--bg-color);
+}
+:root .layui-form-selected .layui-edge{
+    margin-top: 0;
+}
+.layui-edge:before{
+    content: "\e61a";
+}
+
 .layui-body{
     /*padding: 18px 15px;*/
     left: var(--side-width);
