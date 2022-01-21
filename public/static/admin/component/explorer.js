@@ -50,8 +50,6 @@ layui.extend({
 
     function getList(isFirst){
         loading();
-        console.log(explorer.searchForm.file_type);
-        console.log(explorer.searchForm)
         $.ajax({
             url:explorer.url,
             type:"GET",
@@ -242,7 +240,6 @@ layui.extend({
             }
 
             if (attrEvent === 'show'){
-                console.log("show")
             }
 
         })
