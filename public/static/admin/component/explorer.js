@@ -29,7 +29,11 @@ layui.extend({
             page:1,
             limit:10
         },
-        images_selected:[]
+        images_selected:[],
+        searchForm:{
+            keyword:'',
+            file_type:[]
+        }
     }
 
     function getFileTypes(){
@@ -46,10 +50,17 @@ layui.extend({
 
     function getList(isFirst){
         loading();
+        console.log(explorer.searchForm.file_type);
+        console.log(explorer.searchForm)
         $.ajax({
             url:explorer.url,
             type:"GET",
-            data:explorer.page,
+            data:{
+                page:explorer.page.page,
+                limit:explorer.page.limit,
+                file_type:explorer.searchForm.file_type,
+                keyword: explorer.searchForm.keyword
+            },
             success:function (res) {
                 if (res.code === 0){
                     explorer.images = [];
@@ -299,6 +310,28 @@ layui.extend({
                 });
             }
         })
+
+        form.on('submit(searchFormSubmit)', function(data){
+            explorer.searchForm.keyword = data.field.keyword;
+            let file_type = []
+            let isAll = false;
+            $("input:checkbox[name='file_type[]']:checked").each(function(i){
+                if (isAll){
+                    return;
+                }
+                if ($(this).val() === 'all'){
+                    isAll = true;
+                    if (file_type.length>0){
+                        file_type = [];
+                    }
+                    return;
+                }
+                file_type.push($(this).val())
+            });
+            explorer.searchForm.file_type = file_type
+            getList(true)
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     }
 
     function loading(time,append){
@@ -333,22 +366,22 @@ layui.extend({
         let html = "<div class='explorer_contain'>";
         html+='<div class="search"><form class="layui-form" action="">';
         if (explorer.is_file_search){
-            html += '<div class="layui-form-item"><label class="layui-form-label">文件搜索</label><div class="layui-input-block"><input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入文件关键字" class="layui-input"></div></div>';
+            html += '<div class="layui-form-item"><label class="layui-form-label">文件搜索</label><div class="layui-input-block"><input type="text" name="keyword" lay-verify="keyword" autocomplete="off" placeholder="请输入文件关键字" class="layui-input"></div></div>';
         }
         if (explorer.is_file_filter){
             html+='<div class="layui-form-item" pane=""><label class="layui-form-label">文件类型</label><div class="layui-input-block">';
             getFileTypes().map(function (item) {
                 if (item === 'all'){
-                    html+='<input type="checkbox" name="type[all]" lay-skin="primary" title="所有">'
+                    html+='<input type="checkbox" name="file_type[]" value="all" lay-skin="primary" title="所有">'
                 }else{
-                    html+='<input type="checkbox" name="type['+ item +']" lay-skin="primary" title="' + item + '">'
+                    html+='<input type="checkbox" name="file_type[]" value="'+ item +'" lay-skin="primary" title="' + item + '">'
                 }
             })
             html+='</div></div>';
         }
         html+='<div class="layui-form-item"><div class="layui-input-block">';
         if (explorer.is_search){
-            html+='<button type="button" class="layui-btn">搜索</a>';
+            html+='<button type="submit" lay-submit="" lay-filter="searchFormSubmit" class="layui-btn">搜索</a>';
         }
         if (explorer.is_delete){
             html+= '<button type="button" explorer-event="del" class="layui-btn layui-btn-danger">删除文件</button>'
@@ -388,7 +421,9 @@ layui.extend({
             ,zIndex: layer.zIndex //重点1
             ,success: function(layerObj, index){
                 render();
-                form.render()
+
+
+                form.render();
                 explorer._this = $(layerObj)
                 explorer._this.prepend('</div><div id="explorer_page">')
                 getList(true)
