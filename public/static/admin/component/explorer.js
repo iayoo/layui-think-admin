@@ -13,6 +13,7 @@ layui.extend({
         selected:undefined,
         url:undefined,
         upload:undefined,
+        delete_url:undefined,
         images:[],
         loading:loading,
         clearLoad:clearLoad,
@@ -27,7 +28,8 @@ layui.extend({
             count:0,
             page:1,
             limit:10
-        }
+        },
+        images_selected:[]
     }
 
     function getFileTypes(){
@@ -122,14 +124,15 @@ layui.extend({
                     }
                     //上传成功的一些操作
                     // 删除最后一个元素
-                    $('.explorer_file_list .file_item:last').remove();
-                    $('.explorer_file_list').prepend(getItemHtml({
-                        path:res.data.path,
-                        title:res.data.title,
-                        ext:res.data.ext,
-                        size:res.data.size,
-                        id:res.data.id,
-                    }))
+                    // $('.explorer_file_list .file_item:last').remove();
+                    // $('.explorer_file_list').prepend(getItemHtml({
+                    //     path:res.data.path,
+                    //     title:res.data.title,
+                    //     ext:res.data.ext,
+                    //     size:res.data.size,
+                    //     id:res.data.id,
+                    // }))
+                    getList(true)
                 }
                 ,error: function(){
                     //演示失败状态，并实现重传
@@ -161,36 +164,76 @@ layui.extend({
 
             size = "<div class='file_size'><p>" + sizeFormat(item.size) + "</p></div>";
         }
+        let magnifying ='';
         if (item.ext === 'png' || item.ext === 'jpg' || item.ext === 'jpeg' || item.ext === 'svg'){
             img = '<div class="image-show"><img src="'+ item.path + '" alt="' + item.title + '"></div>';
+            magnifying = '<div class="file_image_magnifying" ><i class="layui-icon layui-icon-search" explorer-event="show"></i></div>';
         }else{
             img = '<div class="image-show"><img class="file_icon" src="/static/admin/images/file-icon/'+ item.ext + '.png" alt="' + item.title + '"></div>';
         }
         let selectIcon = '<div class="file_selected_icon" ><i class="layui-icon layui-icon-ok"></i></div>';
 
-        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title +  '</div>';
+
+
+        return '<div class="file_item" explorer-event="select" data-href="' + item.path +'" data-file-id="'+ item.id +'">' + size + selectIcon + img + title + magnifying + '</div>';
     }
 
     function clearFileList(){
-        $('.explorer_file_list').html('')
+        $('.explorer_file_list').remove()
+    }
+
+    function handleSelected(obj){
+        for (let i = 0; i <explorer.images_selected.length; i++) {
+            if (explorer.images_selected[i].id === obj.data('file-id')){
+                explorer.images_selected.splice(i,1);
+                return;
+            }
+        }
+        explorer.images_selected.push({
+            id:obj.data('file-id'),
+            path:obj.data('href'),
+        })
     }
 
     function refreshList(is_render_page){
-        let explorerListDom = $('.explorer_file_list');
         clearFileList();
+        $("#explorer").append('<div class="explorer_file_list"></div>');
+        let explorerListDom = $(".explorer_file_list");
         explorer.images.map(function (item){
-            explorerListDom.append(
-                getItemHtml(item)
-            );
+            let selected = false;
+            explorer.images_selected.map(function (img) {
+                if (item.id === img.id){
+                    selected = true
+                }
+            })
+            if (selected){
+                explorerListDom.append(
+                    $(getItemHtml(item)).addClass('selected')
+                );
+            }else{
+                explorerListDom.append(
+                    $(getItemHtml(item))
+                );
+            }
+
         })
         // 监听事件
-        explorerListDom.on('click', '*[explorer-event]', function(){
+        explorerListDom.on('click', '*[explorer-event]', function(event){
             let _this = $(this);
-            if (_this.hasClass('selected')){
-                _this.removeClass('selected')
-            }else{
-                _this.addClass('selected')
+            let attrEvent = _this.attr('explorer-event');
+            if (attrEvent === 'select'){
+                if (_this.hasClass('selected')){
+                    _this.removeClass('selected')
+                }else{
+                    _this.addClass('selected')
+                }
+                handleSelected(_this)
             }
+
+            if (attrEvent === 'show'){
+                console.log("show")
+            }
+
         })
 
         if (is_render_page){
@@ -203,9 +246,9 @@ layui.extend({
                     //obj包含了当前分页的所有参数，比如：
                     explorer.page.page = obj.curr;
                     explorer.page.limit = obj.limit;
-                    getList()
                     //首次不执行
                     if(!first){
+                        getList()
                         //do something
                     }else{
                     }
@@ -213,9 +256,25 @@ layui.extend({
             });
         }
         clearLoad()
-        render();
     }
 
+    function submitDelete(){
+        loading();
+        $.ajax({
+            url:explorer.delete_url,
+            type:"POST",
+            data:{file:explorer.images_selected},
+            success:function (res) {
+                clearLoad()
+                if (res.code === 0){
+                    getList(true)
+                    explorer.images_selected = []
+                }else{
+
+                }
+            }
+        })
+    }
 
     function render(){
         $(".explorer_contain > .search").on('click','*[explorer-event]',function(){
@@ -224,20 +283,19 @@ layui.extend({
                 id = _this.data('file-id');
             if (attrEvent === 'del'){
                 //询问框
-                let selectedList = $('.explorer_file_list .selected');
-                if (selectedList.length <= 0){
+                if (explorer.images_selected.length <= 0){
                     return;
                 }
-                layer.confirm('确认删除'+ selectedList.length +'个文件？', {
+                parent.layer.confirm('确认删除'+ explorer.images_selected.length +'个文件？', {
                     title:'确认删除？',
                     success:function (layero) {
-                        layer.setTop(layero); //重点2
+                        // layer.setTop(layero); //重点2
                     },
-                    zIndex: layer.zIndex,
+                    // zIndex: layer.zIndex,
                     btn: ['确认','取消'] //按钮
                 }, function(index,layerObj){
-                    layer.close(index)
-                    loading(1500);
+                    parent.layer.close(index)
+                    submitDelete()
                 });
             }
         })
@@ -300,10 +358,10 @@ layui.extend({
         }
         html+='</div></div>';
         html+='</form></div>'
-        html+='</div><div class="explorer_file_list"></div>';
+        html+='</div>';
         return html;
     }
-
+    let del = 0;
     function open(){
         //多窗口模式，层叠置顶
         layer.open({
@@ -317,17 +375,9 @@ layui.extend({
             ,btn: ['确定', '取消'] //只是为了演示
             ,yes: function(index){
                 if (explorer.selected !== undefined){
-                    let selectedList = $('.explorer_file_list .selected');
-                    let data = [];
-                    for (let i = 0; i < selectedList.length; i++) {
-                        let o_this = $(selectedList[i])
-                        data.push({
-                            'id':o_this.data('file-id'),
-                            'href':o_this.data('href'),
-                        })
-                    }
-                    if (explorer.selected(data)){
+                    if (explorer.selected(explorer.images_selected)){
                         layer.close(index)
+                        explorer.images_selected=[];
                     }
                 }
             }
@@ -337,6 +387,7 @@ layui.extend({
 
             ,zIndex: layer.zIndex //重点1
             ,success: function(layerObj, index){
+                render();
                 form.render()
                 explorer._this = $(layerObj)
                 explorer._this.prepend('</div><div id="explorer_page">')

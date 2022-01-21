@@ -30,13 +30,15 @@ class File extends BaseController
     }
 
     public function index(){
-        $list = Db::name('files')->where([])->limit($this->request->param('page',1),$this->request->param('limit',10))->select();
+        $list = Db::name('files')->where([])->page($this->request->param('page',1),$this->request->param('limit',10))->select();
         $count = Db::name('files')->where([])->count();
         return json(['code'=>0,'data'=>['list'=>$list,'count'=>$count]]);
     }
 
     public function delete(){
-        $res = Db::name('files')->where('id',$this->request->param('id',0))->delete();
+        $files = $this->request->param('file');
+        $ids = array_column($files,'id');
+        $res = Db::name('files')->whereIn('id',$ids)->delete();
         if ($res){
             return json(['code'=>0,'message'=>'success']);
         }else{
