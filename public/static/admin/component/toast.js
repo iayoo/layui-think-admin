@@ -106,7 +106,6 @@ layui.extend({
         })
         let out = setTimeout (function () {
             elm.fadeOut(500,function () {
-                console.log(elm)
                 elm.remove();
             })
         }, toast.options.time)

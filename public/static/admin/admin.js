@@ -53,13 +53,10 @@ layui.extend({
             let _this = $(this);
             if (_this.hasClass('layui-nav-item')){
                 let topLength = _this.offset().top -10;
-                console.log(topLength)
-
                 if (e.type === 'mouseleave'){
                     _this.children('.layui-nav-child').fadeOut(200,function () {
                         _this.children('.layui-nav-child').removeAttr('style')
                     })
-
                 }
                 if (e.type === 'mouseenter'){
                     _this.children(".layui-nav-child").css({
@@ -180,7 +177,6 @@ layui.extend({
             })
             admin.tabs.push({id:id,href:href,title:title})
             element.tabChange('window-tab', id); //切换到：用户管理
-
         }
     }
 
