@@ -11,13 +11,18 @@
 <body>
 
 
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
+<div class="layui-layout layui-layout-admin" id="IA_layui_Tdesign">
+    <div id="IA_layui_Tdesign_header" class="layui-header">
         <!-- 头部区域（可配合layui 已有的水平导航） -->
         <ul class="layui-nav layui-layout-left" lay-filter="header_menu">
             <!-- 移动端显示 -->
             <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-header-event="menuLeft">
                 <i class="layui-icon layui-icon-spread-left"></i>
+            </li>
+            <li class="layui-nav-item layadmin-flexible" lay-unselect="">
+                <a href="javascript:;" ia-event="flexible" title="侧边伸缩">
+                    <i class="layui-icon layui-icon-shrink-right" id="ia_side_menu_flexible"></i>
+                </a>
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;" ia-event="refresh" title="刷新">
@@ -57,7 +62,7 @@
         </ul>
     </div>
 
-    <div class="layui-body">
+    <div id="IA_layui_Tdesign_body" class="layui-body">
         <div class="layui-tab" lay-filter="window-tab" lay-allowclose="true" >
             <ul class="layui-tab-title">
             </ul>
@@ -68,25 +73,25 @@
 
 
 
-    <div class="layui-side layui-bg-black">
+    <div id="IA_layui_Tdesign_side" class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <div class="layui-logo layui-hide-xs layui-bg-black">layout demo</div>
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="side_menu" id="docSideMenu">
-                <li class="layui-nav-item">
-                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-home"></i>基础元素</a>
+            <ul class="layui-nav layui-nav-tree layui-nav-left" lay-filter="side_menu" id="docSideMenu">
+                <li class="layui-nav-item layui-menu-item-parent" lay-options="{type: 'parent'}">
+                    <a class="" href="javascript:;"><i class="layui-icon layui-icon-home"></i><span class="title">基础元素</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a data-href="{:url('base/button')}" menu-id="11">按钮</a></dd>
-                        <dd><a data-href="{:url('base/form')}" menu-id="12">表单</a></dd>
-                        <dd><a data-href="{:url('base/table')}" menu-id="13">数据表格</a></dd>
-                        <dd><a data-href="{:url('base/layer')}" menu-id="14">弹出层</a></dd>
+                        <dd><a data-href="{:url('base/button')}" menu-id="11"><span class="title">按钮</span></a></dd>
+                        <dd><a data-href="{:url('base/form')}" menu-id="12"><span class="title">表单</span></a></dd>
+                        <dd><a data-href="{:url('base/table')}" menu-id="13"><span class="title">数据表格</span></a></dd>
+                        <dd><a data-href="{:url('base/layer')}" menu-id="14"><span class="title">弹出层</span></a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="layui-icon layui-icon-component"></i>组件</a>
+                    <a href="javascript:;"><i class="layui-icon layui-icon-component"></i><span class="title">组件</span></a>
                     <dl class="layui-nav-child">
-                        <dd><a data-href="{:url('component/file_manage')}" menu-id="31">文件管理</a></dd>
-                        <dd><a data-href="{:url('base/toast')}" menu-id="32">消息弹窗</a></dd>
+                        <dd><a data-href="{:url('component/file_manage')}" menu-id="31"><span class="title">文件管理</span></a></dd>
+                        <dd><a data-href="{:url('base/toast')}" menu-id="32"><span class="title">消息弹窗</span></a></dd>
                     </dl>
                 </li>
             </ul>
@@ -94,7 +99,7 @@
     </div>
 
 
-    <div class="layui-footer">
+    <div id="IA_layui_Tdesign_footer" class="layui-footer">
         <!-- 底部固定区域 -->
         底部固定区域
     </div>

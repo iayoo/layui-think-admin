@@ -12,6 +12,7 @@ layui.extend({
         tabs:[],
         indexPage:null,
         refresh:refresh,
+        flexible:flexible,
         popup:popup,
         iframeLoading:iframeLoading
     };
@@ -34,6 +35,50 @@ layui.extend({
         curIframe.contentWindow.location.reload(true);
     }
 
+    function isMobile() {
+        if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+            return true
+        }
+        return false
+    }
+
+
+    function flexible(){
+        let navwidth = '232px';
+        let snavwidth = '70px';
+        let mnavwidth = '0px';
+        let tnavwidth = 300;
+        $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-left');
+        $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-right');
+        if (isMobile()) {
+            $('#IA_layui_Tdesign_body').width(document.body.clientWidth + 'px');
+            if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
+                $('#IA_layui_Tdesign_side').animate({ 'width': mnavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': mnavwidth }, tnavwidth);
+                $('#mobilenav').removeClass('mobilenav')
+            } else {
+                $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink');
+                $('#mobilenav').addClass('mobilenav')
+            }
+        } else {
+            if ($('#ia_side_menu_flexible').hasClass('layui-icon-spread-left')) {
+                $('#IA_layui_Tdesign_side').animate({ 'width': snavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': snavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': snavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_header').animate({ 'left': snavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_side').addClass('layui-side-shrink')
+            } else {
+                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink')
+            }
+        }
+    }
+
     function popup(obj){
         let url = $(obj).data('href');
         let title = $(obj).text()
@@ -53,6 +98,14 @@ layui.extend({
     function openPage(url,title,id){
         handleTagChange(id,url,title)
     }
+
+    element.on('nav(layadmin-layout-left)', function(elem) {
+        var event = elem[0].getAttribute('layadmin-event');
+        switch (event) {
+            case 'flexible':
+
+        }
+    });
 
     // //菜单点击事件，其中 docDemoMenu1 对应的是菜单结构上的 id 指
     // dropdown.on('click(docSideMenu)', function(options){

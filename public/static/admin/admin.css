@@ -778,7 +778,34 @@ div.layui-layer-btn a.layui-layer-btn0{
 div.layui-layer{
     border-radius: 10px;
 }
+i.layui-icon{
+    padding-left: 2px;
+    /*padding-right: 3px;*/
+}
+/*兼容pc缩进菜单*/
+.layui-side-shrink .layui-side-scroll .layui-nav-left .layui-nav-item span.title{
+    display:none;
+}
+/*.layui-side-shrink .layui-nav-left .layui-nav-itemed{*/
+/*    background:rgba(0,0,0,.3);*/
+/*}*/
+.layui-side-shrink .layui-nav-itemed>.layui-nav-child,
+.layui-side-shrink .layui-nav-tree .layui-nav-item > a > i.layui-nav-more{
+    display:none !important;
+}
+.layui-side-shrink .layui-nav-tree .layui-nav-item > a > i{
+    margin-right: 2px;
+}
 
+.layui-side-shrink .layui-nav-tree .layui-nav-item > a{
+    width: 18px;
+    padding: 0 10px;
+}
+
+/*.layui-side-shrink .layui-side-scroll .layui-logo{*/
+/*    background-image: url(../layui/images/logo.png);*/
+/*}*/
+/*兼容pc缩进菜单 end*/
 
 /* 资源管理器 */
 
