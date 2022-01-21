@@ -776,11 +776,22 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     padding-left: 0;
 }
 .layui-table-page .layui-laypage a{
-    background-color: var(--table-page-btn-default);
+    /*background-color: var(--table-page-btn-default);*/
     margin-right: 5px;
     margin-left: 5px;
     border-radius: 3px;
-    color: #00FFFF;
+    color: #2a3c3c;
+    border: 1px solid #fff;
+    transition: all .2s linear;
+}
+
+.layui-table-page .layui-laypage span.layui-laypage-spr{
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.layui-table-page .layui-laypage a:hover{
+    border-color: var(--td-brand-color-9);
 }
 
 .layui-form-pane .layui-form-radio, .layui-form-pane .layui-form-switch{
