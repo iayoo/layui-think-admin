@@ -311,6 +311,23 @@ layui.extend({
             }
         })
 
+        form.on('checkbox(chooseAll)',function (data) {
+            let checkedStatesList = [];
+            let statesList = $('input[name="file_type[]"]'), statesLen = statesList.length;
+            if (data.elem.checked) {   //全选
+                checkedStatesList = [];
+                statesList.each(function () {
+                    this.checked = true;
+                })
+            } else {         //全不选
+                checkedStatesList = [];
+                statesList.each(function () {
+                    this.checked = false;
+                })
+            }
+            form.render();
+        });
+
         form.on('submit(searchFormSubmit)', function(data){
             explorer.searchForm.keyword = data.field.keyword;
             let file_type = []
@@ -372,7 +389,7 @@ layui.extend({
             html+='<div class="layui-form-item" pane=""><label class="layui-form-label">文件类型</label><div class="layui-input-block">';
             getFileTypes().map(function (item) {
                 if (item === 'all'){
-                    html+='<input type="checkbox" name="file_type[]" value="all" lay-skin="primary" title="所有">'
+                    html+='<input type="checkbox" lay-filter="chooseAll" name="file_type[]" value="all" lay-skin="primary" title="所有">'
                 }else{
                     html+='<input type="checkbox" name="file_type[]" value="'+ item +'" lay-skin="primary" title="' + item + '">'
                 }
