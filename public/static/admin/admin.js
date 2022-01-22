@@ -76,7 +76,7 @@ layui.extend({
         let navwidth = '232px';
         let snavwidth = '70px';
         let mnavwidth = '0px';
-        let tnavwidth = 300;
+        let tnavwidth = 200;
         $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-left');
         $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-right');
         if (isMobile()) {
@@ -93,19 +93,29 @@ layui.extend({
             }
         } else {
             if ($('#ia_side_menu_flexible').hasClass('layui-icon-spread-left')) {
-                $('#IA_layui_Tdesign_side').animate({ 'width': snavwidth }, tnavwidth);
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': snavwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_side').animate({ 'width': snavwidth }, tnavwidth,'swing');
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': snavwidth }, tnavwidth,'swing',function () {
+                    $('#IA_layui_Tdesign_side').addClass('layui-side-shrink')
+                });
                 $('#IA_layui_Tdesign .layui-footer').animate({ 'left': snavwidth }, tnavwidth);
                 $('#IA_layui_Tdesign_header').animate({ 'left': snavwidth }, tnavwidth);
-                $('#IA_layui_Tdesign_side').addClass('layui-side-shrink')
+                //
                 hoverEvent(true)
 
             } else {
                 hoverEvent();
-                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth);
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth);
-                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth);
-                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth);
+                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth,'swing',function () {
+
+                });
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
+
+                });
+                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
+
+                });
+                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
+                    
+                });
                 $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink')
             }
         }
