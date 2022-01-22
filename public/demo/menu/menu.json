@@ -32,7 +32,7 @@
           {
             "id": 5,"name": "商城设置","icon": "layui-icon-component","href": "","is_menu": false,"is_header": false,
             "children": [
-              {"id": 6,"name": "支付设置","icon": "","href": "/admin/component/file_manage","is_menu": false,"is_header": false,"children": []},
+              {"id": 6,"name": "支付设置","icon": "","href": "/admin/component/file_manage1","is_menu": false,"is_header": false,"children": []},
               {"id": 7,"name": "售后设置","icon": "","href": "/admin/base/toast","is_menu": false,"is_header": false,"children": []}
             ]
           }

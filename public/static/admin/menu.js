@@ -50,6 +50,9 @@ layui.extend({
                             //监听导航点击
                             element.on('nav('+_this.header_el.replace('#','')+')', function(elem){
                                 let menu_id = $(elem).attr('menu-id')
+                                if (menu_id === undefined){
+                                    return;
+                                }
                                 _this.menu_list.map(function (item,index) {
                                     if (item.id.toString() === menu_id.toString() && index !== _this.cur_header_index){
                                         _this.cur_header_index = index;
