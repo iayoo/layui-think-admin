@@ -159,7 +159,25 @@
     width: var(--side-width);
 }
 
+/* 单选框样式 */
+.layui-form-radio{
+    margin: 2px 10px 2px 0;
+}
+/* 开关样式 */
+.layui-form-switch{
+    margin-top: 4px;
+}
+/* 多选样式 */
+.layui-form-item .layui-form-checkbox[lay-skin="primary"]{
+    margin-top: 8px;
+}
+.layui-form-item .layui-form-checkbox{
+    margin-top: 2px;
+}
 
+.layui-form-mid{
+    line-height: 12px;
+}
 
 .layui-layout-admin .layui-footer
 {
@@ -171,7 +189,7 @@
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 6px;
+    font-size: 12px;
     border: none;
     height: 17px;
     width: 17px;
@@ -454,7 +472,7 @@ input.layui-input:hover{
 
 .layui-form-pane .layui-form-label{
     height: 32px;
-    line-height: 32px;
+    line-height: 30px;
     min-height:32px;
     width: 108px;
     border-width: 1px;
@@ -738,7 +756,7 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
     display: none;
     justify-content: center;
     align-items: center;
-    position: fixed;
+    position: absolute;
 }
 .ia-loading >div>i{
     color: var(--td-brand-color-1);
@@ -747,8 +765,8 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 
     width: 80px;
     height: 80px;
-    display: inline;
-    font-size: 80px;
+    /*display: inline;*/
+    /*font-size: 80px;*/
     text-align: center;
 }
 
