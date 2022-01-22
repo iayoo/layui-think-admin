@@ -49,7 +49,7 @@ layui.extend({
             return;
         }
         $(".layui-side-shrink .layui-nav-tree .layui-nav-item,.layui-side-shrink .layui-nav-tree dd").hover(function(e){
-
+            console.log('is_hover',is_hover)
             let _this = $(this);
             if (_this.hasClass('layui-nav-item')){
                 let topLength = _this.offset().top -10;
@@ -96,11 +96,11 @@ layui.extend({
                 $('#IA_layui_Tdesign_side').animate({ 'width': snavwidth }, tnavwidth,'swing');
                 $('#IA_layui_Tdesign .layui-body').animate({ 'left': snavwidth }, tnavwidth,'swing',function () {
                     $('#IA_layui_Tdesign_side').addClass('layui-side-shrink')
+                    hoverEvent(true)
                 });
                 $('#IA_layui_Tdesign .layui-footer').animate({ 'left': snavwidth }, tnavwidth);
                 $('#IA_layui_Tdesign_header').animate({ 'left': snavwidth }, tnavwidth);
                 //
-                hoverEvent(true)
 
             } else {
                 hoverEvent();
@@ -141,13 +141,7 @@ layui.extend({
         handleTagChange(id,url,title)
     }
 
-    element.on('nav(layadmin-layout-left)', function(elem) {
-        var event = elem[0].getAttribute('layadmin-event');
-        switch (event) {
-            case 'flexible':
 
-        }
-    });
 
     // //菜单点击事件，其中 docDemoMenu1 对应的是菜单结构上的 id 指
     // dropdown.on('click(docSideMenu)', function(options){
