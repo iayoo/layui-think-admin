@@ -730,11 +730,12 @@ div.layui-layout-admin .layui-body > div.layui-tab > ul.layui-tab-title > li.lay
 }
 
 .ia-loading{
+    /*display: none;*/
     height: 100%;
     width: 100%;
     top: 0;
     background-color: #fff;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     position: fixed;

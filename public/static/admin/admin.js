@@ -142,15 +142,17 @@ layui.extend({
     }
 
     function iframeLoading(){
-        let loafingHtml = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
-        let loading = $(loafingHtml);
-        $(".layui-layout-admin .layui-body .layui-tab-content").append(loading)
+        let loading = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
+        let tabEl = $(".layui-layout-admin .layui-body .layui-tab-content");
+        if (tabEl.children('.ia-loading').length <= 0){
+            tabEl.append(loading);
+        }
+        tabEl.children('.ia-loading').css("display", "flex").hide().fadeIn(200);
         $(".layui-layout-admin .layui-body .layui-tab-content").attr('height',0)
         setTimeout(function () {
             $(".layui-layout-admin .layui-body .layui-tab-content").removeAttr('height')
-
-            $(".layui-layout-admin .layui-body .layui-tab-content .ia-loading").remove()
-        },1000)
+            tabEl.children('.ia-loading').fadeOut(500);
+        },500)
     }
 
     function handleTagChange(id,href,title){
