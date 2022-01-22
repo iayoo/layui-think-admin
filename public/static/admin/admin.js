@@ -1,10 +1,11 @@
 layui.extend({
     setting:'setting'
-}).define(['element','dropdown','jquery','layer','setting'], function(exports) {
+}).define(['element','dropdown','jquery','layer','setting','menu'], function(exports) {
     let element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
     // let dropdown = layui.dropdown;
     let $ = layui.jquery;
     let layer = layui.layer;
+    let menu = layui.menu;
 
     let admin = {
         curIframeIndex:0,
@@ -17,6 +18,9 @@ layui.extend({
         iframeLoading:iframeLoading
     };
     admin.indexPage = $('body');
+
+    admin.menu = menu;
+    console.log(menu)
 
     /**
      * 刷新iframe
@@ -68,8 +72,6 @@ layui.extend({
             }
         });
     }
-
-
 
 
     function flexible(){
