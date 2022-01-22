@@ -25,15 +25,7 @@ layui.extend({
      */
     function refresh (obj) {
         let curIframe = $(".layui-tab-content .layui-tab-item").eq(admin.curIframeIndex).find("iframe")[0];
-        let _this = $(obj)
-        _this.children('i').removeClass('layui-icon-refresh-3');
-        _this.children('i').addClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
-
-        admin.iframeLoading();
-        setTimeout(function () {
-                _this.children('i').removeClass('layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop');
-                _this.children('i').addClass('layui-icon-refresh-3');
-            },1000);
+        admin.iframeLoading(1000);
         curIframe.contentWindow.location.reload(true);
     }
 
@@ -46,12 +38,10 @@ layui.extend({
 
     function hoverEvent(is_hover){
         if (is_hover === undefined){
-            console.log('is_hover',is_hover)
             $(".layui-side-shrink .layui-nav-tree .layui-nav-item,.layui-side-shrink .layui-nav-tree dd").off('mouseenter').unbind('mouseleave');
             return;
         }
         $(".layui-side-shrink .layui-nav-tree .layui-nav-item,.layui-side-shrink .layui-nav-tree dd").hover(function(e){
-            console.log('is_hover',is_hover)
             let _this = $(this);
             if (_this.hasClass('layui-nav-item')){
                 let topLength = _this.offset().top -10;
@@ -104,18 +94,10 @@ layui.extend({
 
             } else {
                 hoverEvent();
-                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth,'swing',function () {
-
-                });
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
-
-                });
-                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
-
-                });
-                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth,'swing',function () {
-                    
-                });
+                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth,'swing');
+                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth,'swing');
+                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth,'swing');
+                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth,'swing');
                 $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink')
             }
         }
@@ -141,18 +123,25 @@ layui.extend({
         handleTagChange(id,url,title)
     }
 
-    function iframeLoading(){
+    function iframeLoading(time){
         let loading = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
         let tabEl = $(".layui-layout-admin .layui-body .layui-tab-content");
         if (tabEl.children('.ia-loading').length <= 0){
             tabEl.append(loading);
         }
-        tabEl.children('.ia-loading').css("display", "flex").hide().fadeIn(200);
-        $(".layui-layout-admin .layui-body .layui-tab-content").attr('height',0)
+        tabEl.children('.ia-loading').css("display", "flex").hide().fadeIn(100);
+        tabEl.attr('height',0)
+        if (time !== undefined){
+            if (time === 0){
+                return;
+            }
+        }else{
+            time = 1000;
+        }
         setTimeout(function () {
-            $(".layui-layout-admin .layui-body .layui-tab-content").removeAttr('height')
+            tabEl.removeAttr('height')
             tabEl.children('.ia-loading').fadeOut(500);
-        },500)
+        },time)
     }
 
     function handleTagChange(id,href,title){
