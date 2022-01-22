@@ -18,9 +18,7 @@ layui.extend({
         iframeLoading:iframeLoading
     };
     admin.indexPage = $('body');
-
     admin.menu = menu;
-
     /**
      * 刷新iframe
      */
@@ -142,15 +140,6 @@ layui.extend({
         handleTagChange(id,url,title)
     }
 
-
-
-    // //菜单点击事件，其中 docDemoMenu1 对应的是菜单结构上的 id 指
-    // dropdown.on('click(docSideMenu)', function(options){
-    //     // let othis = $(this); //当前菜单列表的 DOM 对象
-    //     console.log(111)
-    //     // console.log(options); //菜单列表的 lay-options 中的参数
-    // });
-
     function iframeLoading(){
         let loafingHtml = "<div class='ia-loading'><div><i class='layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop' style='font-size: 50px'></i></div></div>";
         let loading = $(loafingHtml);
@@ -215,10 +204,5 @@ layui.extend({
     });
 
     admin.menu.change = handleTagChange
-    console.log(2)
-    console.log(admin.menu)
-
-
-    // <i class="layui-icon layui-icon-home"></i>
     exports('admin',admin);
 });

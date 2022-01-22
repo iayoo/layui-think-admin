@@ -3,19 +3,39 @@
   "data": {
     "data": [
       {
-        "id": 1,"name": "基础元素","icon": "layui-icon-home","href": "","is_menu": false,"is_header": false,
+        "id": 110,"name": "示例","icon": "layui-icon-home","href": "","is_menu": false,"is_header": true,
         "children": [
-          {"id": 1,"name": "按钮","icon": "","href": "/admin/base/button","is_menu": false,"is_header": false,"children": []},
-          {"id": 2,"name": "表单","icon": "","href": "/admin/base/form","is_menu": false,"is_header": false,"children": []},
-          {"id": 3,"name": "数据表格","icon": "","href": "/admin/base/table","is_menu": false,"is_header": false,"children": []},
-          {"id": 4,"name": "弹出层","icon": "","href": "/admin/base/layer","is_menu": false,"is_header": false,"children": []}
+          {
+            "id": 1,"name": "基础元素","icon": "layui-icon-home","href": "","is_menu": false,"is_header": false,
+            "children": [
+              {"id": 1,"name": "按钮","icon": "","href": "/admin/base/button","is_menu": false,"is_header": false,"children": []},
+              {"id": 2,"name": "表单","icon": "","href": "/admin/base/form","is_menu": false,"is_header": false,"children": []},
+              {"id": 3,"name": "数据表格","icon": "","href": "/admin/base/table","is_menu": false,"is_header": false,"children": []},
+              {"id": 4,"name": "弹出层","icon": "","href": "/admin/base/layer","is_menu": false,"is_header": false,"children": []}
+            ]
+          },
+          {
+            "id": 5,"name": "组件","icon": "layui-icon-component","href": "","is_menu": false,"is_header": false,
+            "children": [
+              {"id": 6,"name": "文件管理","icon": "","href": "/admin/component/file_manage","is_menu": false,"is_header": false,"children": []},
+              {"id": 7,"name": "消息弹窗","icon": "","href": "/admin/base/toast","is_menu": false,"is_header": false,"children": []}
+            ]
+          }
         ]
-      },
-      {
-        "id": 5,"name": "组件","icon": "layui-icon-component","href": "","is_menu": false,"is_header": false,
+      },{
+        "id": 111,"name": "设置","icon": "layui-icon-home","href": "","is_menu": false,"is_header": true,
         "children": [
-          {"id": 6,"name": "文件管理","icon": "","href": "/admin/component/file_manage","is_menu": false,"is_header": false,"children": []},
-          {"id": 7,"name": "消息弹窗","icon": "","href": "/admin/base/toast","is_menu": false,"is_header": false,"children": []}
+          {
+            "id": 121,"name": "基础设置","icon": "layui-icon-home","href": "/admin/component/file_manage","is_menu": false,"is_header": false,
+            "children":[]
+          },
+          {
+            "id": 5,"name": "商城设置","icon": "layui-icon-component","href": "","is_menu": false,"is_header": false,
+            "children": [
+              {"id": 6,"name": "支付设置","icon": "","href": "/admin/component/file_manage","is_menu": false,"is_header": false,"children": []},
+              {"id": 7,"name": "售后设置","icon": "","href": "/admin/base/toast","is_menu": false,"is_header": false,"children": []}
+            ]
+          }
         ]
       }
     ]
