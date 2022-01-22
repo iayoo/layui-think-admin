@@ -20,6 +20,8 @@ layui.extend({
     };
     admin.indexPage = $('body');
     admin.menu = menu;
+
+    $('.layui-nav-item').off("mouseover");
     /**
      * 刷新iframe
      */
@@ -36,71 +38,9 @@ layui.extend({
         return false
     }
 
-    function hoverEvent(is_hover){
-        if (is_hover === undefined){
-            $(".layui-side-shrink .layui-nav-tree .layui-nav-item,.layui-side-shrink .layui-nav-tree dd").off('mouseenter').unbind('mouseleave');
-            return;
-        }
-        $(".layui-side-shrink .layui-nav-tree .layui-nav-item,.layui-side-shrink .layui-nav-tree dd").hover(function(e){
-            let _this = $(this);
-            if (_this.hasClass('layui-nav-item')){
-                let topLength = _this.offset().top -10;
-                if (e.type === 'mouseleave'){
-                    _this.children('.layui-nav-child').fadeOut(200,function () {
-                        _this.children('.layui-nav-child').removeAttr('style')
-                    })
-                }
-                if (e.type === 'mouseenter'){
-                    _this.children(".layui-nav-child").css({
-                        top: topLength,
-                    });
-                    _this.children('.layui-nav-child').fadeIn(500)
-                }
-
-            }
-        });
-    }
-
-
     function flexible(){
-        let navwidth = '232px';
-        let snavwidth = '70px';
-        let mnavwidth = '0px';
-        let tnavwidth = 200;
-        $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-left');
-        $('#ia_side_menu_flexible').toggleClass('layui-icon-spread-right');
-        if (isMobile()) {
-            $('#IA_layui_Tdesign_body').width(document.body.clientWidth + 'px');
-            if ($('#LAY_app_flexible').hasClass('layui-icon-spread-left')) {
-                $('#IA_layui_Tdesign_side').animate({ 'width': mnavwidth }, tnavwidth);
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': mnavwidth }, tnavwidth);
-                $('#mobilenav').removeClass('mobilenav')
-            } else {
-                $('#LAY_app').animate({ 'width': navwidth }, tnavwidth);
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth);
-                $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink');
-                $('#mobilenav').addClass('mobilenav')
-            }
-        } else {
-            if ($('#ia_side_menu_flexible').hasClass('layui-icon-spread-left')) {
-                $('#IA_layui_Tdesign_side').animate({ 'width': snavwidth }, tnavwidth,'swing');
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': snavwidth }, tnavwidth,'swing',function () {
-                    $('#IA_layui_Tdesign_side').addClass('layui-side-shrink')
-                    hoverEvent(true)
-                });
-                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': snavwidth }, tnavwidth);
-                $('#IA_layui_Tdesign_header').animate({ 'left': snavwidth }, tnavwidth);
-                //
-
-            } else {
-                hoverEvent();
-                $('#IA_layui_Tdesign_side').animate({ 'width': navwidth }, tnavwidth,'swing');
-                $('#IA_layui_Tdesign .layui-body').animate({ 'left': navwidth }, tnavwidth,'swing');
-                $('#IA_layui_Tdesign .layui-footer').animate({ 'left': navwidth }, tnavwidth,'swing');
-                $('#IA_layui_Tdesign_header').animate({ 'left': navwidth }, tnavwidth,'swing');
-                $('#IA_layui_Tdesign_side').removeClass('layui-side-shrink')
-            }
-        }
+        admin.menu.flexible(isMobile());
+        return;
     }
 
     function popup(obj){
