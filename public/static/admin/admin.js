@@ -20,7 +20,6 @@ layui.extend({
     admin.indexPage = $('body');
 
     admin.menu = menu;
-    console.log(menu)
 
     /**
      * 刷新iframe
@@ -199,14 +198,6 @@ layui.extend({
         }
     })
 
-    //监听导航点击
-    element.on('nav(side_menu)', function(elem){
-        let href = $(elem).data('href');
-        let hrefId = $(elem).attr('menu-id');
-        let openType = $(elem).attr('ia-open-type');
-        handleTagChange(hrefId,href,elem.text())
-    });
-
     //监听tab点击
     element.on('tab(window-tab)', function(data){
         admin.curIframeIndex = data.index
@@ -223,9 +214,10 @@ layui.extend({
         nav_tree.find(kv).parent().addClass("layui-this")
     });
 
-    //监听导航点击
-    element.on('nav(header_menu)', function(elem){
-    });
+    admin.menu.change = handleTagChange
+    console.log(2)
+    console.log(admin.menu)
+
 
     // <i class="layui-icon layui-icon-home"></i>
     exports('admin',admin);

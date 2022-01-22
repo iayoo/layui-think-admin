@@ -9,6 +9,11 @@ layui.extend({
         this.version = '1.0.0';
         this.url = '/demo/menu/menu.json';
         this.el = undefined;
+        this.header_el = undefined;
+        this.menu_list = [];
+        this.is_header = false;
+        this.cur_header_index = 0;
+        this.change = undefined;
     }
 
     Menu.prototype.render = function (option) {
@@ -23,8 +28,12 @@ layui.extend({
         if (menuElem.length <= 0){
             return;
         }
-        // console.log(option)
-        // console.log(_this)
+        let headerEl = undefined;
+        if (option.header_el !== undefined){
+            _this.header_el = option.header_el
+            headerEl = $(option.header_el)
+            _this.is_header = true;
+        }
         if (_this.url !== undefined){
             $.ajax({
                 url:_this.url,
@@ -32,78 +41,64 @@ layui.extend({
                 type:"GET",
                 success:function (res) {
                     if (res.code === 0 && res.data !== undefined && res.data.data !== undefined){
-                        res.data.data.map(function (item) {
-                            let liElem = $('<li class="layui-nav-item" ><a class="" href="javascript:;"><i class="layui-icon '+item.icon+'"></i><span class="title">'+item.name+'</span></a></li>');
-                            if (item.children !==undefined && item.children.length > 0){
-                                let cElem = $('<dl class="layui-nav-child"></dl>');
-                                let cElemHtml = '';
-                                item.children.map(function (cItem) {
-                                    cElemHtml += '<dd><a data-href="'+cItem.href+'" menu-id="'+cItem.id+'"><span class="title">'+cItem.name+'</span></a></dd>';
+                        _this.menu_list = res.data.data;
+                        if (_this.is_header && _this.header_el !== undefined){
+                            res.data.data.map(function (item,index) {
+                                headerEl.append('<li class="layui-nav-item layui-hide-xs '+ (index===_this.cur_header_index?'layui-this':'') +'"><a data-href="" menu-id="'+item.id+'">'+item.name+'</a></li>')
+                            })
+                            _this.renderSideMenu(menuElem,_this.menu_list[_this.cur_header_index].children)
+                            //监听导航点击
+                            element.on('nav('+_this.header_el.replace('#','')+')', function(elem){
+                                let menu_id = $(elem).attr('menu-id')
+                                _this.menu_list.map(function (item,index) {
+                                    if (item.id.toString() === menu_id.toString() && index !== _this.cur_header_index){
+                                        _this.cur_header_index = index;
+                                        _this.renderSideMenu(menuElem,item.children)
+                                        element.init();
+                                    }
                                 })
-                                cElem.html(cElemHtml)
-                                liElem.append(cElem)
-                            }
-                            menuElem.append(liElem)
-                            element.init();
-                        })
+                            });
+                        }else{
+                            _this.renderSideMenu(menuElem,res.data.data)
+                        }
+                        element.init();
                     }
+                },
+                error:function (res) {
                 }
             })
         }
     }
-    
-    Menu.prototype.on = function (events, callback) {
+
+    Menu.prototype.renderSideMenu = function (el,data){
         let _this = this;
-        let _con = _this.config.elem;
-        if (typeof (events) !== 'string') {
-            // common.throwError('Navbar error:事件名配置出错，请参考API文档.');
-        }
-        let lIndex = events.indexOf('(');
-        let eventName = events.substr(0, lIndex);
-        let filter = events.substring(lIndex + 1, events.indexOf(')'));
-        if (eventName === 'click') {
-            if (_con.attr('lay-filter') !== undefined) {
-                _con.children('ul').find('li').each(function () {
-                    let $this = $(this);
-                    if ($this.find('dl').length > 0) {
-                        let $dd = $this.find('dd').each(function () {
-                            $(this).on('click', function () {
-                                let $a = $(this).children('a');
-                                let href = $a.data('url');
-                                let icon = $a.children('i:first').data('icon');
-                                let title = $a.children('cite').text();
-                                let data = {
-                                    elem: $a,
-                                    field: {
-                                        href: href,
-                                        icon: icon,
-                                        title: title
-                                    }
-                                }
-                                callback(data);
-                            });
-                        });
-                    } else {
-                        $this.on('click', function () {
-                            let $a = $this.children('a');
-                            let href = $a.data('url');
-                            let icon = $a.children('i:first').data('icon');
-                            let title = $a.children('cite').text();
-                            let data = {
-                                elem: $a,
-                                field: {
-                                    href: href,
-                                    icon: icon,
-                                    title: title
-                                }
-                            }
-                            callback(data);
-                        });
-                    }
-                });
+        $(el).empty();
+        data.map(function (item) {
+            let liElem = $('<li class="layui-nav-item" ><a class="" data-href="'+(item.href === undefined?'javascript:;':item.href)+'"><i class="layui-icon '+item.icon+'"></i><span class="title">'+item.name+'</span></a></li>');
+            if (item.children !==undefined && item.children.length > 0){
+                let cElem = $('<dl class="layui-nav-child"></dl>');
+                let cElemHtml = '';
+                item.children.map(function (cItem) {
+                    cElemHtml += '<dd><a data-href="'+cItem.href+'" menu-id="'+cItem.id+'"><span class="title">'+cItem.name+'</span></a></dd>';
+                })
+                cElem.html(cElemHtml)
+                liElem.append(cElem)
             }
-        }
-    };
+            $(el).append(liElem)
+        })
+        //监听导航点击
+        element.on('nav('+ $(el).attr('id') +')', function(elem){
+            let href = $(elem).data('href');
+            if (href === undefined || href === ''){
+                return;
+            }
+            let hrefId = $(elem).attr('menu-id');
+            if (_this.change !== undefined){
+                _this.change(hrefId,href,elem.text());
+            }
+        });
+        element.init();
+    }
 
     exports('menu', new Menu());
 })

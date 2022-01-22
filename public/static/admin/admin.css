@@ -870,6 +870,12 @@ i.layui-icon{
     background-position-x: 15px;
     background-position-y: 9px;
 }
+
+
+.layui-header .layui-layout-left .layui-this a{
+    background-color: var(--td-active-color);
+    color: #fff !important;
+}
 /*兼容pc缩进菜单 end*/
 
 /* 资源管理器 */
