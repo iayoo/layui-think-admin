@@ -129,7 +129,7 @@ layui.extend({
         if (tabEl.children('.ia-loading').length <= 0){
             tabEl.append(loading);
         }
-        tabEl.children('.ia-loading').css("display", "flex").hide().fadeIn(100);
+        tabEl.children('.ia-loading').css("display", "flex").fadeIn(100);
         tabEl.attr('height',0)
         if (time !== undefined){
             if (time === 0){
