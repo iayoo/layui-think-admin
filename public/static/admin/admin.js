@@ -15,7 +15,8 @@ layui.extend({
         refresh:refresh,
         flexible:flexible,
         popup:popup,
-        iframeLoading:iframeLoading
+        iframeLoading:iframeLoading,
+
     };
     admin.indexPage = $('body');
     admin.menu = menu;
@@ -203,6 +204,9 @@ layui.extend({
         nav_tree.find(kv).parent().addClass("layui-this")
     });
 
+    $('#IA_layui_Tdesign > .page-loading').fadeOut(500);
+
     admin.menu.change = handleTagChange
+
     exports('admin',admin);
 });
