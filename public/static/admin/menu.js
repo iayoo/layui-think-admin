@@ -14,10 +14,6 @@ layui.extend({
             return that;
         }
     }
-    let navwidth = '232px';
-    let snavwidth = '70px';
-    let mnavwidth = '0px';
-    let tnavwidth = 200;
     let Menu = function () {
         this.config = {
             url:'/demo/menu/menu.json',
@@ -26,7 +22,7 @@ layui.extend({
                 shrink_width:'70px',
                 time:200
             },
-            is_refrech:true,
+            is_refresh:true,
             is_shrink:true
         };
         this.el = {}
@@ -102,9 +98,6 @@ layui.extend({
     }
 
     Menu.prototype.flexible = function (isMobile) {
-        // let navwidth = '232px';
-        // let snavwidth = '70px';
-
         let options = this.config,that = this;
         let mnavwidth = '0px';
         that.el[SHRINK_BTN].find('a i').toggleClass('layui-icon-spread-left');
@@ -156,11 +149,10 @@ layui.extend({
             options.header_el.append(that.el[SHRINK_BTN]);
         }
 
-        if (options.is_refrech){
+        if (options.is_refresh){
             that.el[REFRESH_BTN] = getNavItem(null,'',true,"layui-icon-refresh-3",'refresh');
             options.header_el.append(that.el[REFRESH_BTN]);
         }
-
 
         that.menu_list.map(function (item,index) {
             options.header_el.append('<li class="layui-nav-item '+ (index===that.cur_header_index? THIS :'') +'"><a data-href="" menu-id="'+item.id+'">'+item.name+'</a></li>')
