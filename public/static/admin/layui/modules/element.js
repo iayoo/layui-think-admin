@@ -370,42 +370,42 @@ layui.define('jquery', function(exports){
           ,bar = $('<span class="'+ NAV_BAR +'"></span>')
           ,itemElem = othis.find('.'+NAV_ITEM);
           
-          // //hover 滑动效果
-          // if(!othis.find('.'+NAV_BAR)[0]){
-          //   othis.append(bar);
-          //   (othis.hasClass(NAV_TREE)
-          //     ? itemElem.find('dd,>.'+ NAV_TITLE)
-          //   : itemElem).on('mouseenter', function(){
-          //     follow.call(this, bar, othis, index);
-          //   }).on('mouseleave', function(){ //鼠标移出
-          //     //是否为垂直导航
-          //     if(othis.hasClass(NAV_TREE)){
-          //       bar.css({
-          //         height: 0
-          //         ,opacity: 0
-          //       });
-          //     } else {
-          //       //隐藏子菜单
-          //       clearTimeout(timerMore[index]);
-          //       timerMore[index] = setTimeout(function(){
-          //         othis.find('.'+NAV_CHILD).removeClass(SHOW);
-          //         othis.find('.'+NAV_MORE).removeClass(NAV_MORE+'d');
-          //       }, 300);
-          //     }
-          //   });
-          //   othis.on('mouseleave', function(){
-          //     clearTimeout(timer[index])
-          //     timeEnd[index] = setTimeout(function(){
-          //       if(!othis.hasClass(NAV_TREE)){
-          //         bar.css({
-          //           width: 0
-          //           ,left: bar.position().left + bar.width()/2
-          //           ,opacity: 0
-          //         });
-          //       }
-          //     }, TIME);
-          //   });
-          // }
+          //hover 滑动效果
+          if(!othis.find('.'+NAV_BAR)[0]){
+            othis.append(bar);
+            (othis.hasClass(NAV_TREE)
+              ? itemElem.find('dd,>.'+ NAV_TITLE)
+            : itemElem).on('mouseenter', function(){
+              follow.call(this, bar, othis, index);
+            }).on('mouseleave', function(){ //鼠标移出
+              //是否为垂直导航
+              if(othis.hasClass(NAV_TREE)){
+                bar.css({
+                  height: 0
+                  ,opacity: 0
+                });
+              } else {
+                //隐藏子菜单
+                clearTimeout(timerMore[index]);
+                timerMore[index] = setTimeout(function(){
+                  othis.find('.'+NAV_CHILD).removeClass(SHOW);
+                  othis.find('.'+NAV_MORE).removeClass(NAV_MORE+'d');
+                }, 300);
+              }
+            });
+            othis.on('mouseleave', function(){
+              clearTimeout(timer[index])
+              timeEnd[index] = setTimeout(function(){
+                if(!othis.hasClass(NAV_TREE)){
+                  bar.css({
+                    width: 0
+                    ,left: bar.position().left + bar.width()/2
+                    ,opacity: 0
+                  });
+                }
+              }, TIME);
+            });
+          }
           
           //展开子菜单
           itemElem.find('a').each(function(){
